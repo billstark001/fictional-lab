@@ -1,0 +1,11 @@
+test:
+  intl:
+    zh: 测试
+    ja: テスト
+  
+lab:
+  - laboratory
+
+'Computational Social Science':
+  - 'Social Computing'
+  - 'CSS'

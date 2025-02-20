@@ -1,0 +1,62 @@
+{
+  "scripts": {
+    "dev": "vike dev",
+    "build": "vike build",
+    "preview": "vike preview",
+    "preview:python": "cd dist/client && python -m http.server 4000",
+    "publish": "gh-pages -d dist/client",
+    "postinstall": "patch-package"
+  },
+  "type": "module",
+  "dependencies": {
+    "@linaria/core": "^6.2.0",
+    "@linaria/react": "^6.2.1",
+    "@types/compression": "^1.7.5",
+    "@types/express": "^5.0.0",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@wyw-in-js/babel-preset": "^0.5.5",
+    "bibtex-js-parser": "^1.1.6",
+    "cheerio": "^1.0.0",
+    "compression": "^1.8.0",
+    "cross-env": "^7.0.3",
+    "express": "^4.21.2",
+    "js-yaml": "^4.1.0",
+    "luxon": "^3.5.0",
+    "micromark": "^4.0.1",
+    "node-fetch": "^3.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-markdown": "^10.0.0",
+    "seedrandom": "^3.0.5",
+    "sirv": "^3.0.1",
+    "throttle-debounce": "^5.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
+    "vike": "^0.4.223",
+    "vike-react": "^0.5.13",
+    "vite": "^6.1.1"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@eslint/js": "^9.20.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/seedrandom": "^3.0.8",
+    "@types/throttle-debounce": "^5.0.2",
+    "@wyw-in-js/vite": "^0.5.5",
+    "eslint": "^9.20.1",
+    "eslint-plugin-react": "^7.37.4",
+    "gh-pages": "^6.3.0",
+    "globals": "^16.0.0",
+    "patch-package": "^8.0.0",
+    "typescript-eslint": "^8.24.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.34.8"
+  }
+}

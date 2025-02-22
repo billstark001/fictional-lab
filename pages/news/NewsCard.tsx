@@ -1,4 +1,4 @@
-import MarkdownRenderer from "@/lib/react/MarkdownRenderer";
+import Markdown from "@/lib/react/MarkdownRenderer";
 import { DateTime } from 'luxon';
 import { css, cx } from "@linaria/core";
 
@@ -8,6 +8,7 @@ import { LocaleRecord } from "@/lib/locale";
 import { styled } from "@linaria/react";
 import { FC, ImgHTMLAttributes } from "react";
 import { mediaQueryLessOrEqual } from "@/lib/responsive";
+import { withBaseUrl } from "@/lib/url";
 
 const tagsStyle = css`
   display: flex;
@@ -158,13 +159,13 @@ export const NewsCard = (props: NewsRecord) => {
           margin-bottom: 0.5rem;
         }
       `}>
-        <MarkdownRenderer>{content}</MarkdownRenderer>
+        <Markdown>{content}</Markdown>
       </div>
     </div>
 
     {
       metadata.image
-      && <NewsImage className="image" src={metadata.image} />
+      && <NewsImage className="image" src={withBaseUrl(metadata.image)} />
     }
   </NewsCardContainer>;
 };

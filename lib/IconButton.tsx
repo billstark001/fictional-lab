@@ -1,7 +1,10 @@
 import { cx, css } from "@linaria/core";
 import { forwardRef, ButtonHTMLAttributes } from "react";
 
-export const IconButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>((props, ref) => {
+export const IconButton = forwardRef<
+  HTMLButtonElement,
+  ButtonHTMLAttributes<HTMLButtonElement>
+>(function IconButton(props, ref) {
   const { className, ...rest } = props;
   return <button ref={ref} className={cx(
     'clickable-icon',

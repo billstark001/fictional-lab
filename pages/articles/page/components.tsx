@@ -1,5 +1,5 @@
 import { styled } from '@linaria/react';
-import MarkdownRenderer from "@/lib/react/MarkdownRenderer";
+import Markdown from "@/lib/react/MarkdownRenderer";
 import { useState } from 'react';
 import { ArticlePageContext } from '../common/types';
 import ShadowDom from '@/lib/react/ShadowDom';
@@ -14,7 +14,7 @@ export const Container = (props: ArticlePageContext) => {
   return <ContainerWrapper>
     <MetadataRenderer metadata={metadata} lang={locale} />
     {extension === 'md'
-      ? <MarkdownRenderer children={text} />
+      ? <Markdown children={text} />
       : <ShadowDom head={head} body={body} />}
   </ContainerWrapper>;
 };

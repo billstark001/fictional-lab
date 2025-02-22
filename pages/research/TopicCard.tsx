@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import { mediaQueryLessOrEqual } from "@/lib/responsive";
 
-import MarkdownRenderer from "@/lib/react/MarkdownRenderer";
+import Markdown from "@/lib/react/MarkdownRenderer";
 
 
 const TopicContainer = styled.div`
@@ -63,7 +63,7 @@ export const TopicCard = (props: TopicCardProps) => {
   return <TopicContainer>
     <TopicImage src={image} />
     <div className='content'>
-      <MarkdownRenderer>{content}</MarkdownRenderer>
+      <Markdown>{content}</Markdown>
     </div>
   </TopicContainer>;
 };

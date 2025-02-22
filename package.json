@@ -23,6 +23,7 @@
     "cheerio": "^1.0.0",
     "compression": "^1.8.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "js-yaml": "^4.1.0",
     "luxon": "^3.5.0",
@@ -37,6 +38,7 @@
     "throttle-debounce": "^5.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
+    "url-join": "^5.0.0",
     "vike": "^0.4.223",
     "vike-react": "^0.5.13",
     "vite": "^6.1.1"

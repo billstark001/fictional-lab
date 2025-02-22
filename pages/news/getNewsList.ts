@@ -9,6 +9,7 @@ import { NewsPageData, NewsRecord } from "./types";
 import splitByLanguage from "@/lib/markdown/splitByLanguage";
 import parseYamlToTags from "@/lib/tag/parseYamlToTags";
 import TagManager from "@/lib/tag/TagManager";
+import newsUrlGen from 'news.url-gen';
 
 // Match date formats: YYYY-MM-DD, YYYY/MM/DD
 // const datePattern = /^#\s*date\s*:\s*((\d{4}\s*[-/]\s*\d{1,2}\s*[-/]\s*\d{1,2}))\s*$/i;
@@ -60,6 +61,15 @@ export default async function getNewsList(
     const contents = splitByLanguage(allContents, metadata.lang);
     const content = contents[locale || metadata.lang || defaultLocale]
       || Object.values(contents)[0] || '';
+
+    // parse image url
+    if (metadata.image) {
+      const _i = metadata.image.startsWith('/')
+        ? '.' + metadata.image
+        : './' + metadata.image;
+      const _j = newsUrlGen[_i];
+      console.log(_i, _j);
+    }
 
     // collect result
     records.push({ filename, metadata, content });

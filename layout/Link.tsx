@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from "react";
 import { usePageContext } from "vike-react/usePageContext";
-import { defaultLocale, LocaleRecord } from "@/lib/locale";
+import { LocaleRecord } from "@/lib/locale";
 import LinkMenu from "./LinkMenu";
 import LinkBar from "./LinkBar";
 
@@ -16,22 +16,6 @@ export type LinkProps = Omit<LinkDefinition, 'onClick'> &
     subs?: [LinkDefinition, ...LinkDefinition[]];
     variant?: 'bar' | 'menu';
   };
-
-export const matchLink = (current: string, match: string, exact = false) => {
-  current = current || '';
-  match = match || '';
-  if (!match.endsWith('/')) {
-    match += "/";
-  }
-  if (match === '/') {
-    return exact
-      ? current === '/' || !current
-      : true;
-  }
-  return exact
-    ? current === match || current + '/' === match
-    : current.startsWith(match) || current === match.substring(0, match.length - 1);
-};
 
 export function Link(props: LinkProps) {
   const { variant = 'bar', ...rest } = props;

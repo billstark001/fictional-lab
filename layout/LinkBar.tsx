@@ -1,9 +1,9 @@
 import { cx } from "@linaria/core";
 import { styled } from "@linaria/react";
-import { LinkProps, matchLink } from "./Link";
-import { defaultLocale } from "@/lib/locale";
+import { LinkProps } from "./Link";
 import useIsClient from "@/lib/react/useIsClient";
 import useWithLocale from "@/lib/locale/useWithLocale";
+import { matchLink } from "@/lib/url";
 
 const DropdownMenuContainer = styled.div`
   --menu-width: 240px;
@@ -125,7 +125,7 @@ export function LinkBar({ to, label, subs, className, locale, urlLogical, exactM
               key={x.to}
               className={cx(matchLink(urlLogical, x.to, x.exactMatch) && 'match')}
             >
-              <a href={locale === defaultLocale ? x.to : `/${locale}${x.to}`}>
+              <a href={withLocale(x.to, locale)}>
                 {x.label}
               </a>
             </DropdownMenuItem>

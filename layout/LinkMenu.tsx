@@ -1,8 +1,8 @@
 import { styled } from "@linaria/react";
 import { cx } from "@linaria/core";
-import { LinkProps, matchLink } from "./Link";
-import { defaultLocale } from "@/lib/locale";
+import { LinkProps } from "./Link";
 import useWithLocale from "@/lib/locale/useWithLocale";
+import { matchLink } from "@/lib/url";
 
 const MenuItemContainer = styled.div`
   display: flex;
@@ -81,7 +81,7 @@ export function LinkMenu({ to, label, subs, className, locale, urlLogical, exact
           {subs.map(x => (
             <SubMenuItem
               key={x.to}
-              href={locale === defaultLocale ? x.to : `/${locale}${x.to}`}
+              href={withLocale(x.to, locale)}
               className={cx(matchLink(urlLogical, x.to, x.exactMatch) && 'match')}
             >
               {x.label}

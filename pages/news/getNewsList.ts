@@ -68,7 +68,7 @@ export default async function getNewsList(
         ? '.' + metadata.image
         : './' + metadata.image;
       const _j = newsUrlGen[_i];
-      console.log(_i, _j);
+      metadata.image = _j ?? metadata.image;
     }
 
     // collect result

@@ -34,8 +34,12 @@ export default assets;
   `.trim();
 }
 
-async function extractMarkdownResources(filename: string, basePath = '.') {
-  const file = await fsPromises.readFile(path.join(process.cwd(), basePath, filename));
+async function extractMarkdownResources(filename: string, basePath?: string) {
+  const file = await fsPromises.readFile(
+    basePath
+      ? path.join(basePath, filename)
+      : filename
+    );
 
   const links = new Set<string>();
 
@@ -77,6 +81,27 @@ export default function genUrlImports(options?: Partial<GenUrlImportsOptions>) {
   const fileCache = new Map<string, string[]>();
   let mergedCache: string | undefined = undefined;
 
+  const constructFullRecord = async (add?: (path: string) => void) => {
+    for (const dir of matchDirs) {
+      const fullPath = path.join(process.cwd(), dir);
+      if (!fs.existsSync(fullPath)) {
+        console.warn('Directory does not exist:', fullPath);
+        continue;
+      }
+      add?.(fullPath);
+      // temporary solution
+      // the watcher-based one is faulty for unknown reason
+      const files = await fsPromises.readdir(fullPath);
+      for (const f of files) {
+        const fullFile = path.join(fullPath, f);
+        fileCache.set(fullFile, await extractMarkdownResources(fullFile));
+      }
+    }
+  };
+
+  // temporary solution
+  constructFullRecord();
+
   return {
     name: 'gen-url-imports',
 
@@ -99,17 +124,11 @@ export default function genUrlImports(options?: Partial<GenUrlImportsOptions>) {
       return mergedCache;
     },
 
-    configureServer(server) {
+    async configureServer(server) {
       const watcher = server.watcher;
 
-      for (const dir of matchDirs) {
-        const fullPath = path.join(process.cwd(), dir);
-        if (!fs.existsSync(fullPath)) {
-          console.warn('Directory does not exist:', fullPath);
-          continue;
-        }
-        watcher.add(fullPath);
-      }
+      constructFullRecord((p) => watcher.add(p));
+
       watcher.on('add', async (file) => {
         console.log('file added:', file);
         if (!file.toLowerCase().endsWith('.md')) {

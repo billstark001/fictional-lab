@@ -8,7 +8,6 @@ import { LocaleRecord } from "@/lib/locale";
 import { styled } from "@linaria/react";
 import { FC, ImgHTMLAttributes } from "react";
 import { mediaQueryLessOrEqual } from "@/lib/responsive";
-import { withBaseUrl } from "@/lib/url";
 
 const tagsStyle = css`
   display: flex;
@@ -165,7 +164,7 @@ export const NewsCard = (props: NewsRecord) => {
 
     {
       metadata.image
-      && <NewsImage className="image" src={withBaseUrl(metadata.image)} />
+      && <NewsImage className="image" src={(metadata.image)} />
     }
   </NewsCardContainer>;
 };

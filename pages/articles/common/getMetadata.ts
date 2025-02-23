@@ -49,7 +49,7 @@ export default function getMetadata(filename: string, pageContext: LocaleRecord,
     return undefined;
   }
   const parsed = extension === 'md'
-    ? parseMarkdown(article, metadata)
+    ? parseMarkdown(article, { initialMetadata: metadata })
     : parseHtml(article, metadata);
 
   const ret = {

@@ -1,6 +1,8 @@
 import yaml from 'js-yaml';
 import { Metadata, parseMetadata } from '../metadata/parseMetadata';
 import getFirstCodeFence from './getFirstCodeFence';
+import { getFirstTitle } from './getFirstTitle';
+import getDescription from './getDescription';
 
 
 export type ParsedMarkdown = {
@@ -8,50 +10,68 @@ export type ParsedMarkdown = {
   text: string;
 };
 
+export type ParseMarkdownOptions = {
+  metadataLanguage: string;
+  descLength: number;
+  parseTitle: boolean;
+  parseDesc: boolean;
+  replaceMetadata: boolean;
+  replaceTitle: boolean;
+  initialMetadata?: Partial<Metadata>;
+};
+
 const METADATA_LANGUAGE = 'metadata';
 const DESC_LENGTH = 320;
 
-export function parseMarkdown(markdown: string, meta?: Partial<Metadata>): ParsedMarkdown {
+export function parseMarkdown(markdown: string, options?: Readonly<Partial<ParseMarkdownOptions>>): ParsedMarkdown {
+
+  const {
+    metadataLanguage = METADATA_LANGUAGE,
+    descLength = DESC_LENGTH,
+    parseTitle = true,
+    parseDesc = true,
+    replaceMetadata = true,
+    replaceTitle = true,
+    initialMetadata,
+  } = options ?? {};
 
   // eslint-disable-next-line prefer-const
-  let [code, remainingText] = getFirstCodeFence(
+  let [metadataStr, remainingText, slice] = getFirstCodeFence(
     markdown, 
-    METADATA_LANGUAGE,
-    true,
+    metadataLanguage,
+    replaceMetadata,
   );
 
   // parse the converted metadata
-
   const parsed: Record<string, any> = {};
   try {
-    Object.assign(parsed, yaml.load(code || '{}'));
+    Object.assign(parsed, yaml.load(metadataStr || '{}'));
   } catch {
     // do nothing
   }
   const metadata = parseMetadata(parsed);
+  metadata.slice = slice;
 
   // if no title is provided, extract it from the document
-
-  if (!metadata.title) {
-    const titleMatch = markdown.match(/^#\s+(.+?)(?:\n|$)/m);
-    if (titleMatch) {
-      metadata.title = titleMatch[1].trim();
-      remainingText = remainingText.replace(titleMatch[0], '');
+  if (parseTitle && !metadata.title) {
+    const { startPos, endPos, title } = getFirstTitle(remainingText) ?? {};
+    if (title) {
+      metadata.title = title;
+      if (replaceTitle) {
+        remainingText = remainingText.slice(0, startPos) + remainingText.slice(endPos);
+      }
     }
   }
 
   remainingText = remainingText.trim();
 
   // default description
-  if (!metadata.desc && !meta?.desc) {
-    const t = remainingText;
-    metadata.desc = (t.length > DESC_LENGTH 
-      ? t.substring(0, DESC_LENGTH) + '……'
-      : t).replace(/[\n\r\s]+/g, ' ');
+  if (parseDesc && !metadata.desc && !initialMetadata?.desc) {
+    metadata.desc = getDescription(remainingText, descLength);
   }
 
   return {
-    metadata: { ...meta, ...metadata }, 
+    metadata: { ...initialMetadata, ...metadata }, 
     text: remainingText,
   };
 }

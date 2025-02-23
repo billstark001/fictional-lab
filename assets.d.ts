@@ -18,3 +18,8 @@ declare module '*.url-gen' {
   const content: Record<string, string>;
   export default content;
 }
+
+declare module '*.meta-gen' {
+  const content: Record<string, import("./lib/metadata/parseMetadata").Metadata>;
+  export default content;
+}

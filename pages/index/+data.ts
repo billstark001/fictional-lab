@@ -13,7 +13,7 @@ export default async function data(pageContext: PageContext) {
     newsDirectory,
     tagsFilePath,
     (pageContext as unknown as LocaleRecord).languageCode,
-    true,
+    5,
   );
 
   return data;

@@ -8,6 +8,7 @@ import { LocaleRecord } from "@/lib/locale";
 import { styled } from "@linaria/react";
 import { FC, ImgHTMLAttributes } from "react";
 import { mediaQueryLessOrEqual } from "@/lib/responsive";
+import { generateHtmlId } from "@/lib/html/generateHtmlId";
 
 const tagsStyle = css`
   display: flex;
@@ -113,10 +114,23 @@ const TimelineCircle = styled.div`
 
 `;
 
+const IdTag = styled.div`
+  position: relative;
+  width: 0;
+  height: 0;
+
+  .id-tag {
+    position: absolute;
+    top: -100px;
+  }
+`;
+
 export const NewsCard = (props: NewsRecord) => {
-  const { metadata, content } = props;
+  const { filename, metadata, content } = props;
   const { locale } = usePageContext() as unknown as LocaleRecord;
   const { tags, created } = metadata;
+
+  const id = generateHtmlId(`${created}_${filename}`);
 
   const dateObject = DateTime.fromMillis(created || 0);
   const dateStr = dateObject.setLocale(locale).toLocaleString({
@@ -130,11 +144,18 @@ export const NewsCard = (props: NewsRecord) => {
   )}>
 
     <TimelineCircle className="dot"/>
+
+
     <div className="timeline">
       <DateContainer>{dateStr}</DateContainer>
     </div>
 
     <div className="content">
+
+    <IdTag>
+      <div className="id-tag" id={id} />
+    </IdTag>
+    
       {tags && tags.length > 0 && (
         // <div>
         //   <strong>{translations.tags}:</strong>

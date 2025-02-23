@@ -10,6 +10,7 @@ export interface Metadata {
   updated?: number;
   tags?: string[];
   image?: string;
+  slice?: [number, number];
   uncategorized?: Record<string, any>;
 }
 

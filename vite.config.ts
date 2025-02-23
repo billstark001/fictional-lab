@@ -3,7 +3,7 @@ import vike from 'vike/plugin';
 import { loadEnv, UserConfig } from 'vite';
 import wyw from '@wyw-in-js/vite';
 import transformAssets from './vite-plugins/transform-assets';
-import genUrlImports from './vite-plugins/gen-url-import';
+import collectMetadataAndResources from './vite-plugins/collect-metadata-and-resources';
 
 const mode = process.env.NODE_ENV;
 if (mode) {
@@ -20,10 +20,23 @@ const config: UserConfig = {
       },
     }),
     transformAssets(),
-    genUrlImports({
+    collectMetadataAndResources({
       moduleId: 'news',
       matchDirs: ['./pages/news/_news'],
+      parseMarkdownOptions: {
+        parseTitle: false,
+        parseDesc: false,
+        descLength: 120,
+      }
     }),
+    // TODO use collected metadata in articles page
+    // collectMetadataAndResources({
+    //   moduleId: 'articles',
+    //   matchDirs: ['./pages/articles/_articles'],
+    //   parseMarkdownOptions: {
+    //     descLength: 320,
+    //   }
+    // }),
     react(),
     vike(),
   ],

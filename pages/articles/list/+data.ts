@@ -23,7 +23,7 @@ export default async function data(pageContext: PageContext) {
     if (!i) {
       continue;
     }
-    const [lang, path] = i;
+    const [lang] = i;
     const { metadata } = getMetadata(file, { locale: lang, languageCode: lang, urlLogical: '' }) ?? {};
 
     if (!metadata) {
@@ -31,13 +31,10 @@ export default async function data(pageContext: PageContext) {
     }
     allMetadata[file] = metadata;
   }
-
-  const urlPrefix = languageCode === defaultLocale ? '' : ('/' + languageCode);
-
   const articles = Object.entries(allMetadata).map(([name, metadata]) => {
     return {
       name,
-      url: `${urlPrefix}/articles/${name}`,
+      url: `/articles/${name}`,
       metadata,
     } satisfies ArticlePageRecord;
   });

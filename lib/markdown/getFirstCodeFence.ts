@@ -3,7 +3,7 @@ export const getFirstCodeFence = (
   markdown: string, 
   language?: string,
   replaceCode = false,
-): [string | undefined, string] => {
+): [string | undefined, string, [number, number] | undefined] => {
   
   let code: string | undefined;
   let remainingText = markdown;
@@ -14,6 +14,8 @@ export const getFirstCodeFence = (
     '\\s*\\n', 
     'm'
   );
+
+  let slice: [number, number] | undefined = undefined;
   
   const openMatch = remainingText.match(openFenceRegex);
   if (openMatch) {
@@ -31,17 +33,18 @@ export const getFirstCodeFence = (
     
     if (closeMatch) {
       code = afterOpenFence.slice(0, closeMatch.index).trim();
-      const entireBlock = remainingText.slice(
-        startPos,
-        contentStart + closeMatch.index! + closeMatch[0].length
-      );
+      const endPos = contentStart + closeMatch.index! + closeMatch[0].length;
+      // const entireBlock = remainingText.slice(startPos, endPos);
+      slice = [startPos, endPos];
       if (replaceCode) {
-        remainingText = remainingText.replace(entireBlock, '');
+        const r1 = remainingText.slice(0, startPos);
+        const r2 = remainingText.slice(endPos);
+        remainingText = r1 + r2;
       }
     }
   }
 
-  return [code, remainingText];
+  return [code, remainingText, slice];
 };
 
 export default getFirstCodeFence;

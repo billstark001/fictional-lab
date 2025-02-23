@@ -19,6 +19,7 @@ export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: bool
     en: {
       home: "Home",
       news: "News",
+      articles: "Articles",
       people: "People",
       research: "Research",
       publications: "Publications",
@@ -29,6 +30,7 @@ export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: bool
     ja: {
       home: "ホーム",
       news: "ニュース",
+      articles: "記事",
       people: "メンバー",
       research: "研究",
       publications: "出版物",
@@ -39,6 +41,7 @@ export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: bool
     zh: {
       home: "首页",
       news: "新闻",
+      articles: "文章列表",
       people: "人物",
       research: "研究",
       publications: "出版物",
@@ -59,7 +62,10 @@ export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: bool
               to="/"
               label={t.home}
               exactMatch
-              subs={[{ to: "/news", label: t.news }]}
+              subs={[
+                { to: "/news", label: t.news },
+                { to: "/articles", label: t.articles }
+              ]}
               onClick={onClick}
               {...additionalProps}
             />

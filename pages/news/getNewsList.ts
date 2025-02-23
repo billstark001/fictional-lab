@@ -1,15 +1,17 @@
 
-import getFirstCodeFence from "@/lib/markdown/getFirstCodeFence";
 import fsPromises from "fs/promises";
 import path from "path";
 import yaml from 'js-yaml';
 import { defaultLocale } from "@/lib/locale";
-import parseMetadata, { Metadata } from "@/lib/metadata/parseMetadata";
 import { NewsPageData, NewsRecord } from "./types";
 import splitByLanguage from "@/lib/markdown/splitByLanguage";
 import parseYamlToTags from "@/lib/tag/parseYamlToTags";
 import TagManager from "@/lib/tag/TagManager";
 import newsUrlGen from 'news.url-gen';
+import newsMetaGen from 'news.meta-gen';
+import parseMarkdown from "@/lib/markdown/parseMarkdown";
+import { getFirstTitle } from "@/lib/markdown/getFirstTitle";
+import getDescription from "@/lib/markdown/getDescription";
 
 // Match date formats: YYYY-MM-DD, YYYY/MM/DD
 // const datePattern = /^#\s*date\s*:\s*((\d{4}\s*[-/]\s*\d{1,2}\s*[-/]\s*\d{1,2}))\s*$/i;
@@ -29,9 +31,7 @@ export default async function getNewsList(
   newsDirectory: string,
   tagsFilePath: string,
   locale?: string,
-  // TODO filter
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  filter?: boolean | string[],
+  newestItems?: number,
 ) {
 
   const filenames = await fsPromises.readdir(newsDirectory);
@@ -45,22 +45,46 @@ export default async function getNewsList(
   const tagManager = new TagManager(parsedTags);
 
   for (const filename of filenames) {
-    const file = await fsPromises.readFile(path.join(newsDirectory, filename));
+    const filePath = path.join(newsDirectory, filename);
+    const file = (await fsPromises.readFile(filePath)).toString();
 
     // parse metadata
-    const [metadataStr, allContents] = getFirstCodeFence(file.toString(), 'metadata', true);
-    const metadata: Metadata = {} as unknown as Metadata;
-    try {
-      const _metadata = yaml.load(metadataStr || '{}');
-      Object.assign(metadata, parseMetadata(_metadata as any));
-    } catch {
-      // do nothing
-    }
+    const metadata = newsMetaGen[filePath]
+      ? { ...newsMetaGen[filePath] }
+      : (() => {
+        // not found, parse manually
+        console.warn('Metadata not found: ' + filePath);
+        const { metadata } = parseMarkdown(file, {
+          parseTitle: false, parseDesc: false, descLength: 120, replaceMetadata: false,
+        });
+        return metadata;
+      })();
+
+    // remaining parts
+    const [start, end] = metadata.slice ?? [];
+    const allContents = start == null
+      ? file
+      : file.slice(0, start) + file.slice(end);
 
     // parse records
     const contents = splitByLanguage(allContents, metadata.lang);
     const content = contents[locale || metadata.lang || defaultLocale]
       || Object.values(contents)[0] || '';
+
+    // parse title
+    if (!metadata.title) {
+      const { title } = getFirstTitle(content) ?? {};
+      if (title) {
+        metadata.title = title;
+      }
+    }
+
+    if (!metadata.desc) {
+      const desc = getDescription(content, 120);
+      if (desc) {
+        metadata.desc = desc;
+      }
+    }
 
     // parse image url
     if (metadata.image) {
@@ -79,6 +103,14 @@ export default async function getNewsList(
   }
 
   records.sort((a, b) => (b.metadata.created || 0) - (a.metadata.created || 0));
+
+  // restrict item count
+  // TODO do not parse all the files if this is enabled
+  if (newestItems && newestItems > 0) {
+    if (records.length > newestItems) {
+      records.splice(newestItems, records.length - newestItems);
+    }
+  }
 
   const articlesWithTags = tagManager.generateArticlesWithTags(locale || defaultLocale);
   const _t: Record<string, string[]> = {};

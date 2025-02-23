@@ -3,6 +3,8 @@ import { styled } from "@linaria/react";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { darkModeQuery } from "@/lib/theme";
+import IconButton from "@/lib/IconButton";
+import { IoMdClose } from "react-icons/io";
 
 const MenuOverlay = styled.div`
   position: absolute;
@@ -48,8 +50,15 @@ const MenuContainer = styled.div`
 
 const closeButton = css`
   position: absolute;
-  right: 1em;
-  top: 1em;
+  right: 1rem;
+  top: 1rem;
+
+  border: none;
+  font-size: x-large;
+  padding: 0.25rem;
+  box-shadow: none;
+
+  background-color: transparent;
 `;
 
 const FooterContainer = styled.div`
@@ -99,9 +108,9 @@ export const NavMenu = (props: PropsWithChildren<{
 
         <div />
 
-        <button className={closeButton} onClick={onClose}>
-          close
-        </button>
+        <IconButton className={closeButton} onClick={onClose}>
+          <IoMdClose />
+        </IconButton>
       </MenuContainer>
     </>, 
     document.getElementById('nav-menu-root')!

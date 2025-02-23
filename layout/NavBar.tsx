@@ -49,6 +49,11 @@ const NavBarWrapper = styled.div`
   height: 80px;
   ${framedByMaxWidth}
 
+  ${mediaQueryLessOrEqual('sm')} {
+    height: 64px;
+    padding: 16px;
+  }
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;

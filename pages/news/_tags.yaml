@@ -3,9 +3,9 @@ test:
     zh: 测试
     ja: テスト
   
-lab:
-  - laboratory
-
+laboratory:
+  - lab
+  
 'Computational Social Science':
   - 'Social Computing'
   - 'CSS'

@@ -3,10 +3,12 @@
 created: 2024-12-31
 lang: "en"
 tags: 
-  - "テスト"
+  - "Unregistered Tag"
+  - "lab"
 authors: 
   - "Bill Stark"
   - "Toshiaki Subashiko"
+image: /assets/flux/innovation_image1.jpg
 ```
 
 Fictional Lab, a premier research facility at Fictional University, has announced a groundbreaking development in renewable energy storage technology. The lab’s team, led by Dr. Elena Carter, revealed a new type of battery that promises to double the energy efficiency of current lithium-ion systems while being environmentally sustainable.

@@ -67,7 +67,7 @@ export const NewsStack = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 
   ${NewsBoxContainer}:nth-child(1n+4) {
     display: none;
@@ -111,7 +111,7 @@ export const NewsBox = (props: Metadata & { to?: string }) => {
 
   return <NewsBoxContainer href={withLocale(to)}>
     <ImageBox src={image} />
-    <TitleBox>{title || '(NO TITLE)'}</TitleBox>
+    {title ? <TitleBox>{title}</TitleBox> : undefined}
     {dateStr ? <span>
       <FaCalendar />
       {' '}

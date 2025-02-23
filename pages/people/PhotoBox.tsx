@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import { mediaQueryLessOrEqual, mediaQueryMoreOrEqual } from "@/lib/responsive";
+import { mediaQueryLessOrEqual } from "@/lib/responsive";
 
 import photo from '../../assets/photo.jpg?url';
 import { FC, ImgHTMLAttributes } from "react";
@@ -18,11 +18,7 @@ const PhotoBoxContainer = styled.div`
 `;
 
 const PhotoBoxWrapper = styled.div`
-  
-  ${mediaQueryMoreOrEqual('lg')} {
-    position: sticky;
-    top: 20px;
-  }
+
   ${mediaQueryLessOrEqual('md')} {
     display: flex;
     flex-direction: row;
@@ -98,3 +94,5 @@ export const PhotoBox = (props: PhotoBoxProps) => {
     </PhotoBoxWrapper>
   </PhotoBoxContainer>;
 };
+
+export default PhotoBox;

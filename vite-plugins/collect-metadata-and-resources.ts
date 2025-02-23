@@ -192,6 +192,8 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
     invalidate();
   };
 
+  constructFullRecord();
+
   return {
     name: 'collect-metadata-and-resources',
 

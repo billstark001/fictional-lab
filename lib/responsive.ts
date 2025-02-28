@@ -5,17 +5,19 @@ export const breakpoints = Object.freeze({
   sm: 576,
   md: 768,
   lg: 1024,
-  xl: 2048,
+  xl: 1200,
+  xl2: 2048,
 });
 
 type Breakpoint = keyof typeof breakpoints;
 
-const breakpointOrder: readonly Breakpoint[] = ['sm', 'md', 'lg', 'xl'];
+const breakpointOrder: readonly Breakpoint[] = ['sm', 'md', 'lg', 'xl', 'xl2'];
 const lastBreakpoint: Readonly<Record<Breakpoint, Breakpoint | undefined>> = {
   sm: undefined,
   md: 'sm',
   lg: 'md',
   xl: 'lg',
+  xl2: 'xl',
 };
 
 export const mediaQueryMoreOrEqual = (size: keyof typeof breakpoints, prefix = true) =>

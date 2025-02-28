@@ -9,8 +9,4 @@ export const Container = styled.div`
     align-items: flex-end;
   }
 
-  & .cv-dl {
-    display: inline-block;
-    font-size: 0.8em;
-  }
 `;

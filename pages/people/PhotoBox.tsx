@@ -1,98 +1,204 @@
-import { styled } from "@linaria/react";
-import { mediaQueryLessOrEqual } from "@/lib/responsive";
+import Localized from '@/lib/locale/Localized';
+import { mediaQueryLessOrEqual } from '@/lib/responsive';
+import { styled } from '@linaria/react';
+import { ReactNode } from 'react';
+import { FaEnvelope, FaTwitter, FaLinkedin, FaResearchgate, FaGraduationCap } from 'react-icons/fa';
 
-import photo from '../../assets/photo.jpg?url';
-import { FC, ImgHTMLAttributes } from "react";
+const ProfileContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
 
-import { IoLocation } from "react-icons/io5";
-import { FaUniversity } from "react-icons/fa";
-import { IoMail } from "react-icons/io5";
-import { css } from "@linaria/core";
-
-
-const PhotoBoxContainer = styled.div`
-  display: block;
-  margin-right: 16px;
-  align-items: stretch;
-
-`;
-
-const PhotoBoxWrapper = styled.div`
-
+  margin-bottom: 20px;
+  
   ${mediaQueryLessOrEqual('md')} {
-    display: flex;
-    flex-direction: row;
-    margin-right: 0;
+    flex-direction: column;
   }
 `;
 
-const Photo = styled.img`
-  width: 280px;
-  height: 280px;
-  object-fit: contain;
-  border-radius: 40px;
+const InfoSection = styled.div`
+  flex: 2;
+  padding-right: 30px;
+  
+  ${mediaQueryLessOrEqual('md')} {
+    padding-right: inherit;
+    padding-bottom: 20px;
+  }
+`;
+
+const PhotoSection = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--gray-6);
+  border-radius: 20px;
 
-  margin-bottom: 16px;
-
-  ${mediaQueryLessOrEqual('md')} {
-    margin-right: 16px;
-    margin-bottom: 0;
-    width: 240px;
-    height: 240px;
-  }
-
-  ${mediaQueryLessOrEqual('sm')} {
-    width: 200px;
-    height: 200px;
+  min-width: 400px;
+  max-height: 400px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
   }
   
-` as FC<ImgHTMLAttributes<HTMLImageElement>>;
+  ${mediaQueryLessOrEqual('md')} {
+    min-width: inherit;
+  }
+`;
 
+const Name = styled.h1`
+  font-size: 28px;
+  margin-bottom: 5px;
+  
+  ${mediaQueryLessOrEqual('md')} {
+    font-size: 24px;
+  }
+`;
 
-const InfoBox = styled.div`
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  justify-items: start;
-  align-items: center;
+const Position = styled.h2`
+  font-size: 20px;
+  color: var(--gray-2);
+  margin-bottom: 10px;
+  font-weight: 500;
+  
+  ${mediaQueryLessOrEqual('md')} {
+    font-size: 18px;
+  }
+`;
+
+const SubInfo = styled.p`
+  color: var(--gray-2);
+  margin: 5px 0;
+  font-size: 16px;
+  
+  ${mediaQueryLessOrEqual('md')} {
+    font-size: 14px;
+  }
+`;
+
+const Divider = styled.hr`
+  border: 0;
+  height: 1px;
+  background-color: var(--gray-6);
+  margin: 20px 0;
+`;
+
+const Section = styled.div`
+  margin-bottom: 20px;
+  
+  h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    color: var(--gray-2);
+    line-height: 1.6;
+  }
+`;
+
+const Links = styled.div`
+  display: flex;
+  margin: 15px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+  
+  a {
+    color: var(--blue-4);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.3s;
+    
+    &:hover {
+      color: var(--blue-3);
+    }
+    
+    svg {
+      margin-right: 5px;
+      font-size: 18px;
+    }
+  }
 `;
 
 export type PhotoBoxProps = {
-  name: string;
-  location: string;
-  institute: string;
-  email: string;
-}
+  name?: ReactNode,
+  position?: ReactNode,
+  degree?: ReactNode,
+  department?: ReactNode,
+  links?: Record<string, string>,
+  bio?: ReactNode,
+  background?: ReactNode,
+  photoUrl?: string
+};
 
-export const PhotoBox = (props: PhotoBoxProps) => {
-  const { name, location, institute, email } = props;
-  return <PhotoBoxContainer>
-    <PhotoBoxWrapper>
-      <Photo src={photo} />
-      <div>
-        <div className={css`
-          font-size: xx-large;
-          padding-bottom: 0.5em;
-        `}>{name}</div>
-        <InfoBox>
-          <IoLocation />
-          <a href={`https://www.google.com/maps/search/${encodeURI(location)}`}>
-            {location}
-          </a>
+const PhotoBox = (props: PhotoBoxProps) => {
+  const {
+    name,
+    position,
+    degree,
+    department,
+    links = {},
+    bio,
+    background,
+    photoUrl
+  } = props;
+  return (
+    <ProfileContainer>
+      <InfoSection>
+        <Name>{name}</Name>
+        <Position>{position}</Position>
+        <SubInfo><FaGraduationCap /> {degree}</SubInfo>
+        <SubInfo>{department}</SubInfo>
 
-          <FaUniversity />
-          <a href={`https://www.google.com/search?q=${encodeURI(institute)}`}>
-            {institute}
-          </a>
+        <Links>
+          {!!links.email && (
+            <a href={`mailto:${links.email}`}>
+              <FaEnvelope /> {links.email}
+            </a>
+          )}
+          {!!links.twitter && (
+            <a href={links.twitter} target="_blank" rel="noopener noreferrer">
+              <FaTwitter /> Twitter
+            </a>
+          )}
+          {!!links.linkedin && (
+            <a href={links.linkedin} target="_blank" rel="noopener noreferrer">
+              <FaLinkedin /> LinkedIn
+            </a>
+          )}
+          {!!links.researchgate && (
+            <a href={links.researchgate} target="_blank" rel="noopener noreferrer">
+              <FaResearchgate /> ResearchGate
+            </a>
+          )}
+        </Links>
 
-          <IoMail />
-          <a href={`mailto:${email}`}>
-            {email}
-          </a>
-        </InfoBox>
-      </div>
-    </PhotoBoxWrapper>
-  </PhotoBoxContainer>;
+        <Divider />
+
+        <Section>
+          <p>{bio}</p>
+        </Section>
+
+        {!!background && <Section>
+          <h3><Localized
+            zh='履历'
+            ja='略歴'
+          >
+            Background
+          </Localized></h3>
+          <p>{background}</p>
+        </Section>}
+      </InfoSection>
+
+      <PhotoSection>
+        <img src={photoUrl} alt={`Photo`} />
+      </PhotoSection>
+    </ProfileContainer>
+  );
 };
 
 export default PhotoBox;

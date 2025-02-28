@@ -14,7 +14,7 @@ export const colors = css`
 
       --blue-1: #0a1b39;
       --blue-2: #0e2b5c;
-      --blue-3: #1854b4;
+      --blue-3: #1c4d82;
       --blue-4: #2b7bd8;
       --blue-5: #64adf5;
       --blue-6: #99d3fa;
@@ -96,8 +96,8 @@ export const colors = css`
 
       --blue-1: #89c3fa;
       --blue-2: #5aa6f5;
-      --blue-3: #2b7bd8;
-      --blue-4: #2054b4;
+      --blue-3: #2f7fdc;
+      --blue-4: #2560c0;
       --blue-5: #1a325c;
       --blue-6: #152449;
       --blue-7: #050d1c;

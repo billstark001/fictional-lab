@@ -1,14 +1,13 @@
 export { onBeforeRoute };
  
 import { extractLocale } from '@/lib/locale';
-import { modifyUrl } from 'vike/modifyUrl';
-import type { PageContext, Url } from 'vike/types';
  
 import type { OnBeforeRouteSync } from 'vike/types';
  
 const onBeforeRoute: OnBeforeRouteSync = (pageContext): ReturnType<OnBeforeRouteSync> => {
   
-  const extracted = extractLocale(pageContext.urlParsed);
+  const { pathname, href } = pageContext.urlParsed;
+  const extracted = extractLocale(pathname, href);
 
   return {
     pageContext: {

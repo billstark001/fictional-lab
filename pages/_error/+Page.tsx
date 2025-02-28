@@ -1,6 +1,9 @@
+import extractLocale, { LocaleRecord } from "@/lib/locale";
 import Localized from "@/lib/locale/Localized";
+import { LocaleRecordProvider } from "@/lib/locale/useLocaleRecord";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { css } from "@linaria/core";
+import { useEffect, useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { usePageContext } from "vike-react/usePageContext";
 
@@ -35,10 +38,20 @@ const BackToHomepage = () => {
 };
 
 export default function Page() {
+
   const { is404 } = usePageContext();
 
+  // the locale record pre-rendered is only for default locale
+  // so it needs to be parsed dynamically
+  const [localeRecordOverride, setLocaleRecordOverride] = useState<LocaleRecord>();
+  useEffect(() => {
+    const r = extractLocale(location.pathname, location.href);
+    setLocaleRecordOverride(r);
+  }, []);
+
+
   return is404 ? (
-    <>
+    <LocaleRecordProvider value={localeRecordOverride}>
       <h1>
         <Localized>
           {({ languageCode }) => {
@@ -66,9 +79,9 @@ export default function Page() {
         </Localized>
       </p>
       <BackToHomepage />
-    </>
+    </LocaleRecordProvider>
   ) : (
-    <>
+    <LocaleRecordProvider value={localeRecordOverride}>
       <h1>
         <Localized>
           {({ languageCode }) => {
@@ -96,6 +109,6 @@ export default function Page() {
         </Localized>
       </p>
       <BackToHomepage />
-    </>
+    </LocaleRecordProvider>
   );
 }

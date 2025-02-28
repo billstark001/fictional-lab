@@ -1,6 +1,6 @@
 import { framedByMaxWidth } from "@/layout/style";
-import { LocaleRecord } from "@/lib/locale";
 import Localized from "@/lib/locale/Localized";
+import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { Metadata } from "@/lib/metadata/parseMetadata";
 import { mediaQueryLessOrEqual, mediaQueryOnRange } from "@/lib/responsive";
@@ -8,7 +8,6 @@ import { styled } from "@linaria/react";
 import { DateTime } from "luxon";
 import { AnchorHTMLAttributes, FC, HTMLAttributes, useMemo } from "react";
 import { FaCalendar, FaNewspaper } from "react-icons/fa";
-import { usePageContext } from "vike-react/usePageContext";
 
 
 const ImageBox = styled.img`
@@ -90,7 +89,7 @@ export const NewsStack = styled.div`
 
 export const NewsBox = (props: Metadata & { to?: string }) => {
   const { title, desc, image, created, to } = props;
-  const { locale } = usePageContext() as unknown as LocaleRecord;
+  const { locale } = useLocaleRecord();
   const withLocale = useWithLocale();
 
 

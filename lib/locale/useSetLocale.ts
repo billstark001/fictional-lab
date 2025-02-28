@@ -1,12 +1,12 @@
-import { usePageContext } from "vike-react/usePageContext";
-import { defaultLocale, LocaleRecord, supportedLocales } from ".";
+import { defaultLocale, supportedLocales } from ".";
 import { useCallback } from "react";
 import { navigate } from 'vike/client/router';
 import { BASE_PATH } from "../url";
 import urlJoin from "url-join";
+import { useLocaleRecord } from "./useLocaleRecord";
 
 export const useSetLocale = () => {
-  const { urlLogical } = usePageContext() as unknown as LocaleRecord;
+  const { urlLogical } = useLocaleRecord();
 
   const setLocale = useCallback((locale: string) => {
     if (locale.length === 5) {

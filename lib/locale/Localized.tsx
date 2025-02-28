@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactNode } from "react";
-import { usePageContext } from "vike-react/usePageContext";
 import { LocaleRecord, defaultLocale } from ".";
+import { useLocaleRecord } from "./useLocaleRecord";
 
 export const Localized = (props: PropsWithChildren<{
   match?: string;
@@ -8,8 +8,7 @@ export const Localized = (props: PropsWithChildren<{
   match?: undefined;
   children: (props: LocaleRecord) => ReactNode | string;
 }) => {
-  const pageContext = usePageContext();
-  const { locale, languageCode, areaCode, urlLogical } = pageContext as unknown as LocaleRecord;
+  const { locale, languageCode, areaCode, urlLogical } = useLocaleRecord();
 
   // eslint-disable-next-line prefer-const
   let { match, children } = props;

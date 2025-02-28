@@ -3,12 +3,11 @@ import { DateTime } from 'luxon';
 import { css, cx } from "@linaria/core";
 
 import { NewsRecord } from "./types";
-import { usePageContext } from "vike-react/usePageContext";
-import { LocaleRecord } from "@/lib/locale";
 import { styled } from "@linaria/react";
 import { FC, ImgHTMLAttributes } from "react";
 import { mediaQueryLessOrEqual } from "@/lib/responsive";
 import { generateHtmlId } from "@/lib/html/generateHtmlId";
+import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
 
 const tagsStyle = css`
   display: flex;
@@ -127,7 +126,7 @@ const IdTag = styled.div`
 
 export const NewsCard = (props: NewsRecord) => {
   const { filename, metadata, content } = props;
-  const { locale } = usePageContext() as unknown as LocaleRecord;
+  const { locale } = useLocaleRecord();
   const { tags, created } = metadata;
 
   const id = generateHtmlId(`${created}_${filename}`);

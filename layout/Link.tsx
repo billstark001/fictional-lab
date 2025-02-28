@@ -1,8 +1,7 @@
 import { HTMLAttributes, ReactNode } from "react";
-import { usePageContext } from "vike-react/usePageContext";
-import { LocaleRecord } from "@/lib/locale";
 import LinkMenu from "./LinkMenu";
 import LinkBar from "./LinkBar";
+import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
 
 export type LinkDefinition = {
   to: string;
@@ -19,8 +18,7 @@ export type LinkProps = Omit<LinkDefinition, 'onClick'> &
 
 export function Link(props: LinkProps) {
   const { variant = 'bar', ...rest } = props;
-  const pageContext = usePageContext();
-  const { locale, urlLogical } = pageContext as unknown as LocaleRecord;
+  const { locale, urlLogical } = useLocaleRecord();
   
   // Pass the locale information to the specific variant components
   const commonProps = {

@@ -1,6 +1,6 @@
-import { usePageContext } from "vike-react/usePageContext";
-import { defaultLocale, LocaleRecord } from ".";
+import { defaultLocale } from ".";
 import { FC, JSX } from "react";
+import { useLocaleRecord } from "./useLocaleRecord";
 
 export const withLocalized = <T extends JSX.IntrinsicAttributes,>(components: {
   [lang: string]: FC<T>;
@@ -15,8 +15,7 @@ export const withLocalized = <T extends JSX.IntrinsicAttributes,>(components: {
   const frozenComponents = { ...components } as const;
   return function LocalizedComponent(props: T) {
 
-    const pageContext = usePageContext();
-    const { locale, languageCode } = pageContext as unknown as LocaleRecord;
+    const { locale, languageCode } = useLocaleRecord();
 
     const C = frozenComponents[locale] || frozenComponents[languageCode] || defaultComponent;
     return <C {...props} />;

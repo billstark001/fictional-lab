@@ -1,11 +1,11 @@
-import { usePageContext } from "vike-react/usePageContext";
-import { defaultLocale, LocaleRecord } from ".";
+import { defaultLocale } from ".";
 import { useCallback } from "react";
 import { BASE_PATH } from "../url";
 import urlJoin from 'url-join';
+import { useLocaleRecord } from "./useLocaleRecord";
 
 export const useWithLocale = () => {
-  const { locale, languageCode, urlLogical } = usePageContext() as unknown as LocaleRecord;
+  const { locale, languageCode, urlLogical } = useLocaleRecord();
 
   const withLocale = useCallback((href?: string, localeOverride?: string) => {
 

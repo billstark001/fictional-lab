@@ -4,6 +4,7 @@ import { loadEnv, UserConfig } from 'vite';
 import wyw from '@wyw-in-js/vite';
 import transformAssets from './vite-plugins/transform-assets';
 import collectMetadataAndResources from './vite-plugins/collect-metadata-and-resources';
+import forceCss200 from './vite-plugins/force-css-200';
 
 const mode = process.env.NODE_ENV;
 if (mode) {
@@ -13,6 +14,7 @@ if (mode) {
 const config: UserConfig = {
   base: process.env.VITE_BASE_PATH || '/',
   plugins: [
+    forceCss200(),
     wyw({
       include: ['**/*.{ts,tsx}'],
       babelOptions: {

@@ -17,7 +17,7 @@ export const useLocaleRecord = (): LocaleRecord => {
 export const useDynamicLocaleRecord = () => {
   const [localeRecordOverride, setLocaleRecordOverride] = useState<LocaleRecord>();
   useEffect(() => {
-    const r = extractLocale(location.pathname, location.href, BASE_PATH_NO_TRAILING_SLASH);
+    const r = extractLocale(location.pathname, location.pathname, BASE_PATH_NO_TRAILING_SLASH);
     setLocaleRecordOverride(r);
   }, []);
   return localeRecordOverride;

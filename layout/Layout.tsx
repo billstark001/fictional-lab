@@ -9,6 +9,7 @@ import { cx } from '@linaria/core';
 import { colors } from './style/color';
 import { Banner } from './Banner';
 import { LocaleRecordProvider, useDynamicLocaleRecord } from '@/lib/locale/useLocaleRecord';
+import { useData } from 'vike-react/useData';
 
 const Container = styled.div`
   width: 100%;
@@ -32,7 +33,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   // sometimes, like in the error page,
   // the locale record pre-rendered is only for default locale
   // so it needs to be parsed dynamically
-  const dynamicLocaleRecord = useDynamicLocaleRecord();
+  const { isErrorPage } = useData<any>() ?? {};
+  const dynamicLocaleRecord = isErrorPage 
+    ? useDynamicLocaleRecord()
+    : undefined;
   return <LocaleRecordProvider value={dynamicLocaleRecord}>
     <Container className={cx(globalStyles, colors)}>
       <NavBar />

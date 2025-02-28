@@ -1,9 +1,7 @@
 
 import { styled } from '@linaria/react';
 
-import { PageContext } from "vike/types";
-import { PageContextProvider } from "vike-react/usePageContext";
-import { ReactNode, StrictMode } from "react";
+import { ReactNode } from "react";
 import { framedByMaxWidth, globalStyles } from './style';
 import { NavBar } from './NavBar';
 import { Footer } from './Footer';
@@ -30,36 +28,17 @@ const PageContent = styled.div`
   }
 `;
 
-export default function LayoutDefault({ children }: { children: ReactNode }) {
-  return (
-    <Container className={cx(globalStyles, colors)}>
-      <NavBar />
-      <Banner />
-      <Content>{children}</Content>
-      <Footer />
-    </Container>
-  );
-}
-
-export function LayoutRoot({ children, pageContext }: { children: ReactNode; pageContext: PageContext }) {
+export default function Layout({ children }: { children: ReactNode }) {
   // sometimes, like in the error page,
   // the locale record pre-rendered is only for default locale
   // so it needs to be parsed dynamically
   const dynamicLocaleRecord = useDynamicLocaleRecord();
-  return (
-    <StrictMode>
-      <PageContextProvider pageContext={pageContext}>
-        <LocaleRecordProvider value={dynamicLocaleRecord}>
-          <LayoutDefault>{children}</LayoutDefault>
-        </LocaleRecordProvider>
-      </PageContextProvider>
-    </StrictMode>
-  );
-}
-
-
-function Content({ children }: { children: ReactNode }) {
-  return (
-    <PageContent>{children}</PageContent>
-  );
+  return <LocaleRecordProvider value={dynamicLocaleRecord}>
+    <Container className={cx(globalStyles, colors)}>
+      <NavBar />
+      <Banner />
+      <PageContent>{children}</PageContent>
+      <Footer />
+    </Container>
+  </LocaleRecordProvider>;
 }

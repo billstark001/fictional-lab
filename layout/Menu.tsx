@@ -75,7 +75,7 @@ export const Menu = (props: HTMLAttributes<HTMLDivElement> & {
 
   const {
     isOpen, positionX, positionY,
-    onClose, onOpen, onToggle,
+    onClose,
     h = 10, v = 0, variation = 'top-left',
     className,
     ...rest } = props;

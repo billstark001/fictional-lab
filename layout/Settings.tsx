@@ -34,19 +34,28 @@ function Language(props: {
     }
   `}>
     <div onClick={() => props.onSelect?.('en')}>
-      <Localized>English</Localized>
-      <Localized match='ja'>英語</Localized>
-      <Localized match='zh'>英语</Localized>
+      <Localized>{
+        ({ languageCode }) =>
+          languageCode === 'ja' ? '英語'
+            : languageCode === 'zh' ? '英语'
+              : 'English'
+      }</Localized>
     </div>
     <div onClick={() => props.onSelect?.('ja')}>
-      <Localized>Japanese</Localized>
-      <Localized match='ja'>日本語</Localized>
-      <Localized match='zh'>日语</Localized>
+      <Localized>{
+        ({ languageCode }) =>
+          languageCode === 'ja' ? '日本語'
+            : languageCode === 'zh' ? '日语'
+              : 'Japanese'
+      }</Localized>
     </div>
     <div onClick={() => props.onSelect?.('zh')}>
-      <Localized>Simplified Chinese</Localized>
-      <Localized match='ja'>中国語</Localized>
-      <Localized match='zh'>简体中文</Localized>
+      <Localized>{
+        ({ languageCode }) =>
+          languageCode === 'ja' ? '中国語'
+            : languageCode === 'zh' ? '简体中文'
+              : 'Simplified Chinese'
+      }</Localized>
     </div>
   </div>;
 }

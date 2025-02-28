@@ -1,33 +1,39 @@
 import { PropsWithChildren, ReactNode } from "react";
-import { LocaleRecord, defaultLocale } from ".";
+import { LocaleRecord } from ".";
 import { useLocaleRecord } from "./useLocaleRecord";
 
 export const Localized = (props: PropsWithChildren<{
-  match?: string;
+  [match: string]: ReactNode | string | undefined;
 }> | {
-  match?: undefined;
   children: (props: LocaleRecord) => ReactNode | string;
 }) => {
   const { locale, languageCode, areaCode, urlLogical } = useLocaleRecord();
 
-  // eslint-disable-next-line prefer-const
-  let { match, children } = props;
+  // mode 1: render by function
+  const { children } = props;
 
   if (typeof children === 'function') {
     return children({ locale, languageCode, areaCode, urlLogical });
   }
 
-  match = match || defaultLocale;
-
-  if (match.length === 2 && languageCode === match) {
-    return <>{children}</>;
+  // mode 2: render by props
+  let matchedMatch: string | undefined;
+  for (const match of Object.keys(props)) {
+    if (!match) {
+      continue;
+    }
+    if (match.length === 2 && languageCode === match) {
+      matchedMatch = match;
+    }
+    if (match === locale || match.startsWith(languageCode)) {
+      matchedMatch = match;
+    }
+  }
+  if (matchedMatch) {
+    return (props as any)[matchedMatch];
   }
 
-  if (match === locale || match.startsWith(languageCode)) {
-    return <>{children}</>;
-  }
-
-  return undefined;
+  return children;
 };
 
 export default Localized;

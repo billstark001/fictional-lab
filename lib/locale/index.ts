@@ -1,4 +1,3 @@
-import urlJoin from "url-join";
 import { modifyUrl } from "vike/modifyUrl";
 
 export type LocaleRecord = {
@@ -14,14 +13,7 @@ export const supportedLocales = Object.freeze(['en', 'ja', 'zh']);
 
 const localePattern = /\/(\w\w)(?:-(\w\w))?($|\/.*)/;
 
-export function extractLocale(pathname: string, href: string, basePath?: string): LocaleRecord {
-
-  if (basePath && pathname.startsWith(basePath)) {
-    pathname = pathname.slice(basePath.length);
-    if (basePath.startsWith('/') && !pathname.startsWith("/")) {
-      pathname = '/' + pathname;
-    }
-  }
+export function extractLocale(pathname: string, href: string): LocaleRecord {
 
   const execArray = localePattern.exec(pathname);
   if (!execArray) {
@@ -35,11 +27,7 @@ export function extractLocale(pathname: string, href: string, basePath?: string)
 
   const locale = areaCode ? `${languageCode}-${areaCode}` : languageCode;
   // Reconstruct full URL
-  const urlLogical = modifyUrl(href, {
-    pathname: basePath
-      ? urlJoin(basePath, urlLogicalRaw)
-      : urlLogicalRaw,
-  }) || '/';
+  const urlLogical = modifyUrl(href, { pathname: urlLogicalRaw }) || '/';
 
   return {
     locale,

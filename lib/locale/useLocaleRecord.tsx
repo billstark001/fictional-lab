@@ -17,7 +17,16 @@ export const useLocaleRecord = (): LocaleRecord => {
 export const useDynamicLocaleRecord = () => {
   const [localeRecordOverride, setLocaleRecordOverride] = useState<LocaleRecord>();
   useEffect(() => {
-    const r = extractLocale(location.pathname, location.pathname, BASE_PATH_NO_TRAILING_SLASH);
+    let pathname = location.pathname;
+    const basePath = BASE_PATH_NO_TRAILING_SLASH;
+    if (basePath && pathname.startsWith(basePath)) {
+      pathname = pathname.slice(basePath.length);
+      if (basePath.startsWith('/') && !pathname.startsWith("/")) {
+        pathname = '/' + pathname;
+      }
+    }
+    // the 'href' parameter aligns to Vike
+    const r = extractLocale(pathname, pathname ?? '');
     setLocaleRecordOverride(r);
   }, []);
   return localeRecordOverride;

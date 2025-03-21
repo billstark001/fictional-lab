@@ -3,8 +3,11 @@ import fs from "fs";
 import fsPromises from 'fs/promises';
 import path from "path";
 import { Metadata } from "../lib/metadata/parseMetadata";
-import { extractHtmlImages, extractMarkdownImages } from "../lib/markdown/extractImages";
-import parseMarkdown, { ParseMarkdownOptions } from "../lib/markdown/parseMarkdown";
+import { ParseMarkdownOptions } from "../lib/markdown/parseMarkdown";
+import { FileByLanguageRecord, listAllFiles } from "../lib/file";
+import { defaultLocale } from "../lib/locale";
+import parseHtml from "../lib/html/parseHtml";
+import { extractMarkdownResources } from "../lib/markdown/extractMarkdownResources";
 
 const _v = () => {
   let varCount = 0;
@@ -35,7 +38,7 @@ function generateUrlModule(strings: string[]): string {
     );
   }
 
-  return `
+  const ret = `
 ${imports.join("\n")}
 
 export const assets = {
@@ -44,6 +47,8 @@ ${entries.join(",\n")}
 
 export default assets;
   `.trim();
+
+  return ret;
 }
 
 
@@ -74,52 +79,42 @@ export default metadata;
   `.trim();
 }
 
-async function extractMarkdownResources(
-  filename: string, 
-  basePath?: string, 
+async function extractResourcesFromFile(
+  filename: string,
+  basePath?: string,
+  lang?: string,
   parseMarkdownOptions?: Readonly<Partial<ParseMarkdownOptions>>,
 ) {
-  const file = await fsPromises.readFile(
-    basePath
-      ? path.join(basePath, filename)
-      : filename
-    );
+  const currentFullPath = basePath
+    ? path.join(basePath, filename)
+    : filename;
+  const { name: pureFileName, ext } = path.parse(path.basename(filename));
+  const file = await fsPromises.readFile(currentFullPath);
+  const stat = await fsPromises.stat(currentFullPath);
 
-  const links = new Set<string>();
-  const addImage = (image?: string) => {
-    if (!image || image.startsWith('/public/')) {
-      return;
-    }
-    const _i = image.startsWith('/')
-      ? '.' + image
-      : './' + image;
-    links.add(_i);
+  const metadata: Partial<Metadata> = {
+    title: pureFileName,
+    lang: lang || defaultLocale,
+    created: stat.birthtime.getTime(),
+    updated: stat.mtime.getTime(),
   };
 
-  // parse metadata
-  const { metadata, text: remainingText } = parseMarkdown(
-    file.toString(), 
-    parseMarkdownOptions,
-  );
-
-  // add metadata image
-  addImage(metadata.image);
-
-  // add other images
-  for (const { url } of extractMarkdownImages(remainingText)) {
-    addImage(url);
+  if (ext === '.md') {
+    return extractMarkdownResources(file.toString(), {
+      initialMetadata: metadata,
+      ...parseMarkdownOptions,
+    });
+  } else {
+    const parsed = parseHtml(file.toString(), metadata);
+    return { metadata: parsed.metadata, links: undefined };
   }
-  for (const { url } of extractHtmlImages(remainingText)) {
-    addImage(url);
-  }
-
-  return { metadata, links: [...links] };
 }
 
 export type CollectMetadataAndResourcesOptions = {
   moduleId: string;
-  matchDirs: string[];
+  matchDirs: readonly string[];
   parseMarkdownOptions?: Readonly<Partial<ParseMarkdownOptions>>;
+  extensions?: readonly string[];
 };
 
 export default function collectMetadataAndResources(options?: Partial<CollectMetadataAndResourcesOptions>) {
@@ -127,12 +122,15 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
     moduleId = 'url',
     matchDirs = [],
     parseMarkdownOptions,
+    extensions = ['md'],
   } = options ?? {};
 
   const importUrlModuleId = `${moduleId}.url-gen`;
   const importMetaModuleId = `${moduleId}.meta-gen`;
+  const importLangModuleId = `${moduleId}.lang-gen`;
   const resolvedUrlModuleId = 'virtual:' + importUrlModuleId;
   const resolvedMetaModuleId = 'virtual:' + importMetaModuleId;
+  const resolvedLangModuleId = 'virtual:' + importLangModuleId;
 
   const urlCache = new Map<string, string[]>();
   let urlModule: string | undefined = undefined;
@@ -140,10 +138,14 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
   const metadataCache = new Map<string, Metadata>();
   let metadataModule: string | undefined = undefined;
 
+  const languageRecord = new FileByLanguageRecord(extensions);
+  let languageModule: string | undefined = undefined;
+
   const invalidate = () => {
     urlModule = undefined;
     metadataModule = undefined;
-    
+    languageModule = undefined;
+
     if (devServer?.moduleGraph) {
       const module = devServer.moduleGraph.getModuleById(resolvedUrlModuleId);
       if (module) {
@@ -153,25 +155,31 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
       if (module2) {
         devServer.reloadModule(module2);
       }
+      const module3 = devServer.moduleGraph.getModuleById(resolvedLangModuleId);
+      if (module3) {
+        devServer.reloadModule(module3);
+      }
     }
   };
 
   let devServer: ViteDevServer;
 
-  
+
   const reconstructSingleRecord = async (filePath: string, remove?: boolean) => {
     if (!remove) {
-      const { metadata, links } = await extractMarkdownResources(
-        filePath, undefined, parseMarkdownOptions
+      const { lang } = languageRecord.add(filePath) ?? { lang: defaultLocale };
+      const { metadata, links } = await extractResourcesFromFile(
+        filePath, undefined, lang, parseMarkdownOptions
       );
-      urlCache.set(filePath, links);
+      urlCache.set(filePath, links ?? []);
       metadataCache.set(filePath, metadata);
     } else {
       urlCache.delete(filePath);
       metadataCache.delete(filePath);
+      languageRecord.remove(filePath);
     }
   };
-  
+
 
   const constructFullRecord = async (add?: (path: string) => void) => {
     for (const dir of matchDirs) {
@@ -183,9 +191,8 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
       add?.(fullPath);
 
       // the initial construction requires manual operation
-      const files = await fsPromises.readdir(fullPath);
-      for (const f of files) {
-        const fullFile = path.join(fullPath, f);
+      const files = await listAllFiles(fullPath);
+      for (const fullFile of files) {
         reconstructSingleRecord(fullFile);
       }
     }
@@ -204,6 +211,9 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
       if (id === importMetaModuleId) {
         return resolvedMetaModuleId;
       }
+      if (id === importLangModuleId) {
+        return resolvedLangModuleId;
+      }
     },
 
     async load(id) {
@@ -221,6 +231,12 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
         }
         return metadataModule;
       }
+      if (id === resolvedLangModuleId) {
+        if (languageModule == undefined) {
+          languageModule = `export default ${JSON.stringify(languageRecord.getRecord())}`;
+        }
+        return languageModule;
+      }
     },
 
     async configureServer(server) {
@@ -237,7 +253,7 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
         reconstructSingleRecord(file);
         invalidate();
       });
-      
+
       watcher.on('unlink', async (file) => {
         if (!file.toLowerCase().endsWith('.md')) {
           return;
@@ -246,7 +262,7 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
         reconstructSingleRecord(file, true);
         invalidate();
       });
-      
+
       watcher.on('change', async (file) => {
         if (!file.toLowerCase().endsWith('.md')) {
           return;

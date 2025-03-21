@@ -12,8 +12,8 @@ export const janeDoe: PhotoBoxProps = {
   links: {
     email: "jane.doe@fictionallab.edu",
     twitter: "janedoe_ai",
-    linkedin: "jane-doe-ai",
-    researchgate: "Jane_Doe"
+    linkedIn: "jane-doe-ai",
+    researchGate: "Jane_Doe"
   },
   bio: "Dr. Doe has been a leading researcher in AI for over a decade, with a focus on developing ethical and interpretable AI systems. She has published extensively in top-tier journals and conferences and serves on the editorial board of several AI journals.",
   background: "Before joining Fictional Lab, Dr. Doe was a research scientist at Tech University, where she led the Neural Computing Group. She received her Ph.D. from Stanford University and completed postdoctoral research at MIT.",
@@ -28,8 +28,8 @@ export const johnSmith: PhotoBoxProps = {
   links: {
     email: "john.smith@fictionallab.edu",
     twitter: "johnsmith_robotics",
-    linkedin: "john-smith-robotics",
-    researchgate: "John_Smith_Robotics"
+    linkedIn: "john-smith-robotics",
+    researchGate: "John_Smith_Robotics"
   },
   bio: "Dr. Smith's research bridges robotics and social systems, focusing on understanding how autonomous systems can work effectively with humans. He has led multiple international projects and received awards for his contributions to robotics research.",
   background: "Dr. Smith joined Fictional Lab after spending five years in industry as Lead Robotics Engineer at Future Technologies Inc. He holds a Ph.D. from Carnegie Mellon University and has published over 50 peer-reviewed papers.",
@@ -43,8 +43,8 @@ export const hanakoYamada: PhotoBoxProps = {
   department: "Department of Computational Life Sciences",
   links: {
     email: "hanako.yamada@fictionallab.edu",
-    linkedin: "hanako-yamada-compbio",
-    researchgate: "Hanako_Yamada_Bio"
+    linkedIn: "hanako-yamada-compbio",
+    researchGate: "Hanako_Yamada_Bio"
   },
   bio: "Dr. Yamada specializes in applying machine learning techniques to biological data. Her work focuses on protein folding prediction and genomic analysis, with applications in drug discovery and personalized medicine.",
   background: "Dr. Yamada completed her doctoral work at UC Berkeley and was a Postdoctoral Fellow at the National Institute of Health before joining Fictional Lab. She is the recipient of the Young Investigator Award from the Computational Biology Society.",

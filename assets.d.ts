@@ -23,3 +23,8 @@ declare module '*.meta-gen' {
   const content: Record<string, import("./lib/metadata/parseMetadata").Metadata>;
   export default content;
 }
+
+declare module '*.lang-gen' {
+  const content: Record<string, { [lang: string]: string }>;
+  export default content;
+}

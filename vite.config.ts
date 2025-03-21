@@ -8,13 +8,12 @@ import forceCss200 from './vite-plugins/force-css-200';
 
 const mode = process.env.NODE_ENV;
 if (mode) {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 }
 
 const config: UserConfig = {
   base: process.env.VITE_BASE_PATH || '/',
   plugins: [
-    forceCss200(),
     wyw({
       include: ['**/*.{ts,tsx}'],
       babelOptions: {
@@ -31,16 +30,17 @@ const config: UserConfig = {
         descLength: 120,
       }
     }),
-    // TODO use collected metadata in articles page
-    // collectMetadataAndResources({
-    //   moduleId: 'articles',
-    //   matchDirs: ['./pages/articles/_articles'],
-    //   parseMarkdownOptions: {
-    //     descLength: 320,
-    //   }
-    // }),
+    collectMetadataAndResources({
+      moduleId: 'articles',
+      matchDirs: ['./pages/articles/_articles'],
+      parseMarkdownOptions: {
+        descLength: 320,
+      },
+      extensions: ['md', 'html'],
+    }),
     react(),
     vike(),
+    forceCss200(),
   ],
   resolve: {
     alias: {
@@ -49,8 +49,8 @@ const config: UserConfig = {
   },
   server: {
     watch: {
-      ignored: ['**/node_modules/**'], 
-      usePolling: false,        
+      ignored: ['**/node_modules/**'],
+      usePolling: false,
     },
   },
 };

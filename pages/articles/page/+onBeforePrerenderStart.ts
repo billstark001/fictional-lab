@@ -1,12 +1,15 @@
-import { articlesDirectory } from "../common/defs";
-import enumerate from "../common/enumerate";
+import articlesLanguageRecord from 'articles.lang-gen';
+import { articlesDirectory } from '../common/defs';
 
 export default async function () {
 
-  const allFiles = await enumerate(articlesDirectory);
-
-  return [...Object.keys(allFiles)]
-    .map(file => ({
-      url: `/articles/${file}`
-    }));
+  return [...Object.keys(articlesLanguageRecord)]
+    .map(fullPath => {
+      const name = fullPath.startsWith(articlesDirectory)
+        ? fullPath.substring(articlesDirectory.length)
+        : fullPath;
+      return {
+        url: `/articles/${name}`
+      };
+    });
 }

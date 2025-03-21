@@ -6,48 +6,49 @@ import parseMarkdown from "@/lib/markdown/parseMarkdown";
 import parseHtml from "@/lib/html/parseHtml";
 import { Metadata } from "@/lib/metadata/parseMetadata";
 import { ArticlePageContext } from "./types";
+import articlesModule from 'articles.meta-gen';
+import articlesLanguageRecord from 'articles.lang-gen';
 
 
-export default function getMetadata(filename: string, pageContext: LocaleRecord, fullPathOverride?: string) {
+export default function getMetadata(filename: string, pageContext: LocaleRecord) {
 
   const { locale: assignedLocale, languageCode } = pageContext;
 
-  let fullPath = fullPathOverride || '';
   let article = '';
   let locale = '';
   let extension: 'html' | 'md' = 'html';
 
-  const metadata: Partial<Metadata> = {
-    title: filename,
-  };
+  // resolve path
 
-  if (fullPathOverride) {
-    const currentFullPath = path.join(articlesDirectory, fullPathOverride);
-    article = fs.readFileSync(currentFullPath, "utf8");
-  }
+  const fileKey = path.join(articlesDirectory, filename);
 
-  f1: for (const l of fullPathOverride ? [] : [assignedLocale, languageCode, undefined]) {
-    for (const x of extensionOrder) {
-      const currentFullPath = path.join(articlesDirectory, `${filename}${l ? '.' : ''}${l || ''}.${x}`);
-      if (fs.existsSync(currentFullPath)) {
-        fullPath = currentFullPath;
-        article = fs.readFileSync(currentFullPath, "utf8");
-        locale = l || defaultLocale;
-        metadata.lang = locale;
-        extension = x;
-
-        const stat = fs.statSync(currentFullPath);
-        metadata.created = stat.birthtime.getTime();
-        metadata.updated = stat.mtime.getTime();
-
-        break f1;
-      }
+  const _l = articlesLanguageRecord[fileKey] ?? {};
+  let currentFullPath = '';
+  for (const l of [assignedLocale, languageCode, defaultLocale]) {
+    const p = _l[l];
+    if (p) {
+      locale = l;
+      currentFullPath = p;
+      extension = extensionOrder.find(x => p.endsWith(x)) || extension;
+      break;
     }
   }
-
-  if (!fullPath) {
+  if (!currentFullPath) {
+    [locale, currentFullPath] = Object.entries(_l)[0] ?? [];
+    locale = locale ?? defaultLocale;
+  }
+  if (!currentFullPath || !fs.existsSync(currentFullPath)) {
     return undefined;
   }
+
+  // parse article
+
+  article = fs.readFileSync(currentFullPath, "utf8");
+
+  const metadata: Partial<Metadata> = {
+    title: filename,
+    ...articlesModule[currentFullPath],
+  };
   const parsed = extension === 'md'
     ? parseMarkdown(article, { initialMetadata: metadata })
     : parseHtml(article, metadata);

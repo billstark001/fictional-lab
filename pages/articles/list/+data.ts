@@ -1,37 +1,38 @@
 import { Metadata } from "@/lib/metadata/parseMetadata";
-import { articlesDirectory } from "../common/defs";
-import enumerate from "../common/enumerate";
 import { ArticlePageRecord } from "../common/types";
-import getMetadata from "../common/getMetadata";
 import { PageContext } from "vike/types";
 import { defaultLocale, LocaleRecord } from "@/lib/locale";
+import { articlesDirectory } from "../common/defs";
+import articlesModule from 'articles.meta-gen';
+import articlesLanguageRecord from 'articles.lang-gen';
 
 export default async function data(pageContext: PageContext) {
-
-  const allFiles = await enumerate(articlesDirectory);
 
   const { languageCode } = pageContext as unknown as  LocaleRecord;
 
   // { lang: { slug: metadata } }
   const allMetadata: Record<string, Metadata> = {};
 
-  for (const file in allFiles) {
-    const f = Object.entries(allFiles[file]);
+  for (const file in articlesLanguageRecord) {
+    const f = Object.entries(articlesLanguageRecord[file]);
     const i = f.find(([lang]) => lang === languageCode || lang.startsWith(languageCode))
       || f.find(([lang]) => lang === defaultLocale || lang.startsWith(defaultLocale))
       || f[0];
     if (!i) {
       continue;
     }
-    const [lang] = i;
-    const { metadata } = getMetadata(file, { locale: lang, languageCode: lang, urlLogical: '' }) ?? {};
+    const [, fullPath] = i;
+    const metadata = articlesModule[fullPath];
 
     if (!metadata) {
       continue;
     }
     allMetadata[file] = metadata;
   }
-  const articles = Object.entries(allMetadata).map(([name, metadata]) => {
+  const articles = Object.entries(allMetadata).map(([fullPath, metadata]) => {
+    const name = fullPath.startsWith(articlesDirectory)
+      ? fullPath.substring(articlesDirectory.length)
+      : fullPath;
     return {
       name,
       url: `/articles/${name}`,

@@ -1,8 +1,10 @@
 import Localized from '@/lib/locale/Localized';
 import { mediaQueryLessOrEqual } from '@/lib/responsive';
+import { css } from '@linaria/core';
 import { styled } from '@linaria/react';
 import { ReactNode } from 'react';
-import { FaEnvelope, FaTwitter, FaLinkedin, FaResearchgate, FaGraduationCap } from 'react-icons/fa';
+import { FaEnvelope, FaResearchgate, FaGraduationCap, FaGoogleScholar, FaLinkedin, FaTwitter } from 'react-icons/fa6';
+import { IconType } from 'react-icons/lib';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -52,6 +54,7 @@ const PhotoSection = styled.div`
 const Name = styled.h1`
   font-size: 28px;
   margin-bottom: 5px;
+  border-bottom: inherit;
   
   ${mediaQueryLessOrEqual('md')} {
     font-size: 24px;
@@ -63,6 +66,7 @@ const Position = styled.h2`
   color: var(--gray-2);
   margin-bottom: 10px;
   font-weight: 500;
+  border-bottom: inherit;
   
   ${mediaQueryLessOrEqual('md')} {
     font-size: 18px;
@@ -96,7 +100,6 @@ const Section = styled.div`
   
   p {
     color: var(--gray-2);
-    line-height: 1.6;
   }
 `;
 
@@ -135,6 +138,52 @@ export type PhotoBoxProps = {
   photoUrl?: string
 };
 
+type LinkDefinition = {
+  name: string,
+  prefix: string,
+  icon: IconType,
+  desc?: 'use-value' | string | ReactNode,
+};
+
+const linkDefs: readonly Readonly<LinkDefinition>[] = [
+  {
+    name: 'email',
+    prefix: 'mailto:',
+    icon: FaEnvelope,
+    desc: 'use-value',
+  },
+  {
+    name: 'twitter',
+    prefix: 'https://x.com/',
+    icon: FaTwitter,
+    desc: 'Twitter / X',
+  },
+  {
+    name: 'linkedIn',
+    prefix: 'https://www.linkedin.com/in/',
+    icon: FaLinkedin,
+    desc: 'LinkedIn',
+  },
+  {
+    name: 'researchMap',
+    prefix: 'https://researchmap.jp/',
+    icon: FaResearchgate,
+    desc: 'ResearchMap',
+  },
+  {
+    name: 'researchGate',
+    prefix: 'https://researchmap.jp/',
+    icon: FaResearchgate,
+    desc: 'ResearchGate',
+  },
+  {
+    name: 'googleScholar',
+    prefix: 'https://scholar.google.com/citations?user=',
+    icon: FaGoogleScholar,
+    desc: 'Google Scholar',
+  }
+];
+
 const PhotoBox = (props: PhotoBoxProps) => {
   const {
     name,
@@ -155,26 +204,19 @@ const PhotoBox = (props: PhotoBoxProps) => {
         <SubInfo>{department}</SubInfo>
 
         <Links>
-          {!!links.email && (
-            <a href={`mailto:${links.email}`}>
-              <FaEnvelope /> {links.email}
-            </a>
-          )}
-          {!!links.twitter && (
-            <a href={links.twitter} target="_blank" rel="noopener noreferrer">
-              <FaTwitter /> Twitter
-            </a>
-          )}
-          {!!links.linkedin && (
-            <a href={links.linkedin} target="_blank" rel="noopener noreferrer">
-              <FaLinkedin /> LinkedIn
-            </a>
-          )}
-          {!!links.researchgate && (
-            <a href={links.researchgate} target="_blank" rel="noopener noreferrer">
-              <FaResearchgate /> ResearchGate
-            </a>
-          )}
+        {linkDefs.map((d) => {
+          if (!links[d.name]) {
+            return;
+          }
+          const l = links[d.name];
+          const desc = d.desc === 'use-value'
+            ? l
+            : d.desc;
+            return <a key={d.name} href={d.prefix + l} target='_blank' rel='noreferrer'>
+              <d.icon /> {desc}
+            </a>;
+        })}
+          
         </Links>
 
         <Divider />
@@ -190,7 +232,9 @@ const PhotoBox = (props: PhotoBoxProps) => {
           >
             Background
           </Localized></h3>
-          <p>{background}</p>
+          <p className={css`
+            white-space: pre-wrap;
+          `}>{background}</p>
         </Section>}
       </InfoSection>
 

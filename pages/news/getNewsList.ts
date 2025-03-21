@@ -89,8 +89,8 @@ export default async function getNewsList(
     // parse image url
     if (metadata.image) {
       const _i = metadata.image.startsWith('/')
-        ? '.' + metadata.image
-        : './' + metadata.image;
+        ? '@' + metadata.image
+        : '@/' + metadata.image;
       const _j = newsUrlGen[_i];
       metadata.image = _j ?? metadata.image;
     }

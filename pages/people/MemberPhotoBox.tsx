@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { styled } from '@linaria/react';
-import { MdEmail } from 'react-icons/md';
 import { mediaQueryLessOrEqual, mediaQueryMoreOrEqual } from '@/lib/responsive';
+import { FaEnvelope } from 'react-icons/fa6';
 
 const DEFAULT_PHOTO = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZWVlZSIvPjxwYXRoIGQ9Ik0xMDAgNjVjMTIgMCAyMiAxMCAyMiAyMnMtMTAgMjItMjIgMjItMjItMTAtMjItMjIgMTAtMjIgMjItMjJ6bTAgNjBjMjUgMCA0NiAxMSA0NiAyNXY1SDU0di01YzAtMTQgMjEtMjUgNDYtMjV6IiBmaWxsPSIjYWFhYWFhIi8+PC9zdmc+';
 
@@ -104,7 +104,7 @@ export const MemberPhotoBox: React.FC<MemberPhotoBoxType> = ({
         {academicYear && <Year>({academicYear})</Year>}
       </Name>
       <Email href={`mailto:${email}`}>
-        <MdEmail size={18} />
+        <FaEnvelope size={18} />
         {email}
       </Email>
       <ResearchArea>{researchArea}</ResearchArea>

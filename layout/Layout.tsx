@@ -2,7 +2,7 @@
 import { styled } from '@linaria/react';
 
 import { ReactNode } from "react";
-import { framedByMaxWidth, globalStyles } from './style';
+import { framedByMaxWidth, globalStyles, markdownStyles } from './style';
 import { NavBar } from './NavBar';
 import { Footer } from './Footer';
 import { cx } from '@linaria/core';
@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     ? useDynamicLocaleRecord()
     : undefined;
   return <LocaleRecordProvider value={dynamicLocaleRecord}>
-    <Container className={cx(globalStyles, colors)}>
+    <Container className={cx(markdownStyles, globalStyles, colors)}>
       <NavBar />
       <Banner />
       <PageContent>{children}</PageContent>

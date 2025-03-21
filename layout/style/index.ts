@@ -1,5 +1,90 @@
 import { css } from "@linaria/core";
 import { mediaQueryLessOrEqual } from "@/lib/responsive";
+import { darkModeQuery } from "@/lib/theme";
+
+
+export const markdownStyles = css`
+  :global() {
+
+    .md-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .md-col {
+      flex: 1;
+    }
+
+    .md-box {
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      border-left-width: 4px;
+      border-left-style: solid;
+
+      & > p:first-child {
+        margin-top: 0;
+      }
+
+      & > p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .md-box.info {
+      border-left-color: #2196F3;
+      background-color: #E3F2FD;
+      color: #0D47A1;
+    }
+    
+    .md-box.success {
+      border-left-color: #4CAF50;
+      background-color: #E8F5E9;
+      color: #1B5E20;
+    }
+    
+    .md-box.warning {
+      border-left-color: #FF9800;
+      background-color: #FFF3E0;
+      color: #E65100;
+    }
+    
+    .md-box.error {
+      border-left-color: #F44336;
+      background-color: #FFEBEE;
+      color: #B71C1C;
+    }
+    
+
+    ${darkModeQuery} {
+      .md-box.info {
+        border-left-color: #42A5F5;
+        background-color: #0D2B45;
+        color: #90CAF9;
+      }
+      
+      .md-box.success {
+        border-left-color: #66BB6A;
+        background-color: #0D2915;
+        color: #A5D6A7;
+      }
+      
+      .md-box.warning {
+        border-left-color: #FFA726;
+        background-color: #3D2E08;
+        color: #FFCC80;
+      }
+      
+      .md-box.error {
+        border-left-color: #EF5350;
+        background-color: #3C0E0B;
+        color: #EF9A9A;
+      }
+    }
+
+  }
+`;
 
 export const globalStyles = css`
 
@@ -25,11 +110,19 @@ export const globalStyles = css`
 
       color: var(--gray-1);
       background-color: var(--gray-7);
+
+      line-height: 1.6;
+    }
+
+    body, div, p, span {
+      transition: background-color 0.1s ease;
     }
 
     * {
       box-sizing: border-box;
     }
+
+    // #region button
 
     button {
       padding: 6px 12px;
@@ -67,9 +160,124 @@ export const globalStyles = css`
       box-shadow: none;
     }
 
-    body, div, p, span {
-      transition: background-color 0.1s ease;
+    // #endregion
+
+    // #region blockquote
+
+    blockquote {
+      font-size: small;
+      margin: 0;
+      padding: 1em 1.5em;
+      border-left: 1px solid var(--blue-2);
+      background-color: var(--gray-6);
+      overflow-wrap: break-word;
     }
+
+    blockquote p {
+      margin: 0.5em 0;
+    }
+
+    blockquote cite {
+      display: block;
+    }
+
+    // #endregion
+
+    // #region heading
+
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.5em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--gray-2);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      border-bottom: 1px solid var(--blue-6);
+      padding-bottom: 0.3em;
+
+      &.no-border {
+        border-bottom: inherit;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      border-bottom: 1px solid var(--gray-6);
+      padding-bottom: 0.2em;
+
+      &.no-border {
+        border-bottom: inherit;
+      }
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--blue-2);
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      color: var(--gray-3);
+    }
+
+    h5 {
+      font-size: 1rem;
+      color: var(--gray-3);
+    }
+
+    h6 {
+      font-size: 0.875rem;
+      color: var(--gray-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .heading-underline {
+      position: relative;
+    }
+
+    .heading-underline:after {
+      content: '';
+      display: block;
+      margin-top: 10px;
+      height: 3px;
+      width: 60px;
+      background-color: #3498db;
+    }
+
+    .heading-underline.text-center:after {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .heading-light {
+      font-weight: 300;
+    }
+
+    .heading-accent {
+      color: var(--blue-3)
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+        h5 { font-size: 1rem; }
+        h6 { font-size: 0.875rem; }
+    }
+
+    // #endregion
+
+    // #region portals
 
     #nav-menu-root {
       position: fixed;
@@ -81,6 +289,8 @@ export const globalStyles = css`
     #portal-root {
       z-index: 150;
     }
+
+    // #endregion
 
   }
   
@@ -110,6 +320,6 @@ export const framedByMaxWidth = Object.freeze({
   width: '100%',
   'max-width': 'calc(var(--layout-max-width) + var(--layout-min-gap) * 2)',
   'padding-left': 'var(--layout-min-gap)',
-  'padding-right': 'var(--layout-min-gap)', 
+  'padding-right': 'var(--layout-min-gap)',
   margin: '0 auto',
 } as const);

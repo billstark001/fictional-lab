@@ -93,19 +93,25 @@ async function extractResourcesFromFile(
   const stat = await fsPromises.stat(currentFullPath);
 
   const metadata: Partial<Metadata> = {
-    title: pureFileName,
     lang: lang || defaultLocale,
     created: stat.birthtime.getTime(),
     updated: stat.mtime.getTime(),
   };
 
   if (ext === '.md') {
-    return extractMarkdownResources(file.toString(), {
+    const ret = extractMarkdownResources(file.toString(), {
       initialMetadata: metadata,
       ...parseMarkdownOptions,
     });
+    if (parseMarkdownOptions?.parseTitle) {
+      ret.metadata.title ||= pureFileName;
+    }
+    return ret;
   } else {
     const parsed = parseHtml(file.toString(), metadata);
+    if (parseMarkdownOptions?.parseTitle) {
+      parsed.metadata.title ||= pureFileName;
+    }
     return { metadata: parsed.metadata, links: undefined };
   }
 }

@@ -6,7 +6,7 @@ import pubsWork from './_pub_working.bib';
 import pubsConf from './_pub_conference.bib';
 import pubsJour from './_pub_journal.bib';
 import Localized from '@/lib/locale/Localized';
-import Heading from '@/lib/Heading';
+import Heading from '@/lib/components/Heading';
 
 
 export default function Page() {

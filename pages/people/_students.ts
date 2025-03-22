@@ -1,4 +1,4 @@
-import { MemberPhotoBoxType } from "./MemberPhotoBox";
+import { MemberInfoList } from "./MemberPhotoBox";
 
 import grad0 from '@/assets/flux/graduate_student_image.jpg?url';
 import grad1 from '@/assets/flux/graduate_student_image1.jpg?url';
@@ -96,4 +96,4 @@ export default {
       photo: undergrad5,
     },
   ]
-} satisfies Record<StudentProgramType, MemberPhotoBoxType[]>;
+} satisfies Record<StudentProgramType, MemberInfoList>;

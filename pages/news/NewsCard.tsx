@@ -99,7 +99,7 @@ const NewsImage = styled.img`
 
 const DateContainer = styled.div`
   color: var(--blue-3);
-  font-size: lg;
+  font-size: large;
   font-weight: bold;
 `;
 

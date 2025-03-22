@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import { styled } from '@linaria/react';
+import { MdEmail } from 'react-icons/md';
 import { mediaQueryLessOrEqual, mediaQueryMoreOrEqual } from '@/lib/responsive';
-import { FaEnvelope } from 'react-icons/fa6';
+import { useLocaleRecord } from '@/lib/locale/useLocaleRecord';
+import Localized from '@/lib/locale/Localized';
 
 const DEFAULT_PHOTO = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZWVlZSIvPjxwYXRoIGQ9Ik0xMDAgNjVjMTIgMCAyMiAxMCAyMiAyMnMtMTAgMjItMjIgMjItMjItMTAtMjItMjIgMTAtMjIgMjItMjJ6bTAgNjBjMjUgMCA0NiAxMSA0NiAyNXY1SDU0di01YzAtMTQgMjEtMjUgNDYtMjV6IiBmaWxsPSIjYWFhYWFhIi8+PC9zdmc+';
 
@@ -74,20 +76,35 @@ const ResearchArea = styled.p`
   font-size: 0.9rem;
   text-align: left;
   width: 100%;
-  line-height: 1.5;
   color: var(--gray-2);
 `;
 
 
-export type MemberPhotoBoxType = {
-  name: string;
-  email: string;
+export type MemberPhotoBoxProps = {
+  name: string | [string, string][];
+  email?: string;
   photo?: string;
   researchArea?: ReactNode;
   academicYear?: string;
 };
 
-export const MemberPhotoBox: React.FC<MemberPhotoBoxType> = ({
+export const parseName = (name: string | [string, string][]): ReactNode => {
+  if (Array.isArray(name)) {
+    return <span>
+      {name.map(([n, read], i) => <ruby key={i}> {n} <rt> {read} </rt></ruby>)}
+    </span>;
+  }
+  return name;
+};
+
+const noDescTag = <Localized
+  ja='記述なし。'
+  zh='暂无描述。'
+>
+  No description.
+</Localized>;
+
+export const MemberPhotoBox: React.FC<MemberPhotoBoxProps> = ({
   name,
   email,
   photo,
@@ -100,19 +117,56 @@ export const MemberPhotoBox: React.FC<MemberPhotoBoxType> = ({
         <img src={photo || DEFAULT_PHOTO} alt={`${name}`} />
       </Photo>
       <Name>
-        {name}
-        {academicYear && <Year>({academicYear})</Year>}
+        {parseName(name)}
+        {!!academicYear && <Year>({academicYear})</Year>}
       </Name>
-      <Email href={`mailto:${email}`}>
-        <FaEnvelope size={18} />
+      {!!email && <Email href={`mailto:${email}`}>
+        <MdEmail size={18} />
         {email}
-      </Email>
-      <ResearchArea>{researchArea}</ResearchArea>
+      </Email>}
+      <ResearchArea>{researchArea || noDescTag}</ResearchArea>
     </Container>
   );
 };
 
 export default MemberPhotoBox;
+
+// #region multilingual
+
+export type MemberInfo = MemberPhotoBoxProps & {
+  lang?: string;
+}
+
+export const filterMemberInfoWithLocale = (
+  info: MemberInfo[],
+  locale: string,
+): MemberInfo => {
+  const langCode = locale.length > 2 ? locale.substring(0, 1) : locale;
+  const accumulate: Partial<MemberInfo> = {};
+  let langExactReturn: MemberInfo | undefined = undefined;
+  let langCodeReturn: MemberInfo | undefined = undefined;
+  let langCodePartialReturn: MemberInfo | undefined = undefined;
+  for (const i of info) {
+    Object.assign(accumulate, i);
+    if (i.lang === locale) {
+      langExactReturn = i;
+    }
+    else if (i.lang === langCode) {
+      langCodeReturn = i;
+    }
+    else if (i.lang && i.lang.length > 2 && i.lang.substring(0, 2) === langCode) {
+      langCodePartialReturn = i;
+    }
+  }
+  return {
+    ...accumulate,
+    ...langExactReturn || langCodeReturn || langCodePartialReturn
+  } as MemberInfo;
+};
+
+// #endregion
+
+// #region grid
 
 const MembersGridContainer = styled.div`
   display: grid;
@@ -135,8 +189,25 @@ const MembersGridContainer = styled.div`
   }
 `;
 
-export const MembersGrid: React.FC<{ items: MemberPhotoBoxType[] }> = ({ items }) => {
+export type MemberInfoList = (MemberInfo | MemberInfo[])[];
+
+export const MembersGrid: React.FC<{ items: MemberInfoList }> = (props) => {
+  const { items } = props;
+
+  const { locale } = useLocaleRecord();
+
   return <MembersGridContainer>
-    {items.map((item, index) => <MemberPhotoBox key={index} {...item} />)}
+    {items.map((info, index) => {
+      const item = Array.isArray(info)
+        ? filterMemberInfoWithLocale(info, locale)
+        : info;
+      if (!item) {
+        return undefined;
+      }
+      return <MemberPhotoBox key={index} {...item} />;
+    })}
   </MembersGridContainer>;
 };
+
+
+// #endregion

@@ -1,21 +1,24 @@
 
 import Localized from '@/lib/locale/Localized';
 import WelcomeContent from './WelcomeContent';
-import NewsBox, { AllNewsButton, NewsStack } from './NewsBox';
+import NewsBox, { NewsStack } from './NewsBox';
 import { useData } from 'vike-react/useData';
 import type getNewsList from '../news/getNewsList';
-import useWithLocale from '@/lib/locale/useWithLocale';
 import { generateHtmlId } from '@/lib/html/generateHtmlId';
+import { BottomButtonGroup, MiddleButtonGroup, TopButtonGroup } from './ButtonGroups';
 
 export default function Page() {
 
   const { records } = useData<Awaited<ReturnType<typeof getNewsList>>>();
-    const withLocale = useWithLocale();
 
   return (
     <div>
 
+      <TopButtonGroup />
+
       <WelcomeContent />
+
+      <MiddleButtonGroup />
 
       <h1><Localized>{
         ({ locale }) => locale === 'zh'
@@ -31,7 +34,7 @@ export default function Page() {
         />)}
       </NewsStack>
 
-      <AllNewsButton href={withLocale('/news')} />
+      <BottomButtonGroup />
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { throttle } from "throttle-debounce";
 // import logoC from '../assets/img/logo_c.png';
 // import logoW from '../assets/img/logo_w.png';
 import NavMenu from './NavMenu';
-import IconButton from '@/lib/IconButton';
+import { IconButton } from '@/lib/components/Buttons';
 import Settings from './Settings';
 import Links from './Links';
 import useWithLocale from '@/lib/locale/useWithLocale';

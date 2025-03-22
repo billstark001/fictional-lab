@@ -3,7 +3,7 @@ import { styled } from "@linaria/react";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { darkModeQuery } from "@/lib/theme";
-import IconButton from "@/lib/IconButton";
+import { IconButton } from "@/lib/components/Buttons";
 import { IoMdClose } from "react-icons/io";
 
 const MenuOverlay = styled.div`
@@ -28,6 +28,7 @@ const MenuContainer = styled.div`
   width: 240px;
   right: -240px;
   height: 100vh;
+  overflow-y: auto;
   background-color: var(--blue-7);
   transition: all 0.3s ease;
 

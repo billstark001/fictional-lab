@@ -1,4 +1,4 @@
-import IconButton from "@/lib/IconButton";
+import { IconButton } from "@/lib/components/Buttons";
 import { useSetLocale } from "@/lib/locale/useSetLocale";
 import { darkModeQuery, lightModeQuery, useTheme } from "@/lib/theme";
 import { useDisclosure } from "@/lib/react/useDisclosure";

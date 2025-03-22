@@ -1,13 +1,11 @@
-import { framedByMaxWidth } from "@/layout/style";
-import Localized from "@/lib/locale/Localized";
 import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { Metadata } from "@/lib/metadata/parseMetadata";
 import { mediaQueryLessOrEqual, mediaQueryOnRange } from "@/lib/responsive";
 import { styled } from "@linaria/react";
 import { DateTime } from "luxon";
-import { AnchorHTMLAttributes, FC, HTMLAttributes, useMemo } from "react";
-import { FaCalendar, FaNewspaper } from "react-icons/fa";
+import { FC, HTMLAttributes, useMemo } from "react";
+import { FaCalendar } from "react-icons/fa";
 
 
 const ImageBox = styled.img`
@@ -121,54 +119,3 @@ export const NewsBox = (props: Metadata & { to?: string }) => {
 };
 
 export default NewsBox;
-
-
-
-const AllNewsButtonFrame = styled.button`
-
-  transition: background-color 0.1s ease-in-out;
-  background: transparent;
-  background-color: transparent;
-  border-radius: 6px;
-  padding: 1em 4em;
-
-  &:hover {
-    background: transparent;
-    background-color: #7771;
-  }
-  &:active {
-    background: transparent;
-    background-color: #7772;
-  }
-
-  border: 1px solid var(--blue-3);
-  color: var(--blue-3);
-
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-
-  font-size: lg;
-`;
-
-const AllNewsButtonContainer = styled.a`
-  ${framedByMaxWidth}
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const AllNewsButton = (props: AnchorHTMLAttributes<HTMLAnchorElement>) => {
-
-  return <AllNewsButtonContainer {...props}>
-    <AllNewsButtonFrame>
-      <FaNewspaper />
-      <Localized>{
-        ({ locale }) => locale === 'zh'
-          ? '浏览所有新闻' : locale === 'ja'
-            ? 'すべて' : 'View All'
-      }</Localized>
-    </AllNewsButtonFrame>
-  </AllNewsButtonContainer>;
-};

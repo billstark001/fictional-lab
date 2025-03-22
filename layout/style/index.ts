@@ -10,6 +10,10 @@ export const markdownStyles = css`
       display: flex;
       gap: 20px;
       margin-bottom: 20px;
+
+      ${mediaQueryLessOrEqual('sm')} {
+        flex-direction: column;
+      }
     }
 
     .md-col {
@@ -125,9 +129,6 @@ export const globalStyles = css`
     // #region button
 
     button {
-      padding: 6px 12px;
-      font-size: 16px;
-      font-weight: 500;
       border: none;
       border-radius: 8px;
       background: linear-gradient(145deg, #4a90e2, #357abd);
@@ -137,6 +138,16 @@ export const globalStyles = css`
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       position: relative;
       overflow: hidden;
+
+      :where(&) {
+        padding: 6px 12px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+    
+    ${darkModeQuery} button {
+      background: linear-gradient(145deg,rgb(43, 106, 178),rgb(35, 85, 135));
     }
 
     button:hover {

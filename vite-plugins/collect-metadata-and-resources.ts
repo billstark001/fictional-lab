@@ -4,10 +4,10 @@ import fsPromises from 'fs/promises';
 import path from "path";
 import { Metadata } from "../lib/metadata/parseMetadata";
 import { ParseMarkdownOptions } from "../lib/markdown/parseMarkdown";
+import { extractMarkdownResources } from "../lib/markdown/extractMarkdownResources";
 import { FileByLanguageRecord, listAllFiles } from "../lib/file";
 import { defaultLocale } from "../lib/locale";
 import parseHtml from "../lib/html/parseHtml";
-import { extractMarkdownResources } from "../lib/markdown/extractMarkdownResources";
 
 const _v = () => {
   let varCount = 0;
@@ -89,8 +89,12 @@ async function extractResourcesFromFile(
     ? path.join(basePath, filename)
     : filename;
   const { name: pureFileName, ext } = path.parse(path.basename(filename));
-  const file = await fsPromises.readFile(currentFullPath);
   const stat = await fsPromises.stat(currentFullPath);
+  if (!stat.isFile) {
+    return undefined;
+  }
+
+  const file = await fsPromises.readFile(currentFullPath);
 
   const metadata: Partial<Metadata> = {
     lang: lang || defaultLocale,
@@ -174,9 +178,14 @@ export default function collectMetadataAndResources(options?: Partial<CollectMet
   const reconstructSingleRecord = async (filePath: string, remove?: boolean) => {
     if (!remove) {
       const { lang } = languageRecord.add(filePath) ?? { lang: defaultLocale };
-      const { metadata, links } = await extractResourcesFromFile(
+      const res = await extractResourcesFromFile(
         filePath, undefined, lang, parseMarkdownOptions
       );
+      if (!res) {
+        // the path is a directory
+        return;
+      }
+      const { metadata, links } = res;
       urlCache.set(filePath, links ?? []);
       metadataCache.set(filePath, metadata);
     } else {

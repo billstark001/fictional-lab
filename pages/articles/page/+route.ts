@@ -1,4 +1,4 @@
 
-const route = '/articles/@filename';
+const route = '/articles/*';
 
 export default route;

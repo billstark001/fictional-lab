@@ -2,7 +2,7 @@ import fsPromises from "fs/promises";
 import { defaultLocale } from "../locale";
 import path from "path";
 
-const localePattern = /(.+?)(?:.(\w\w)(?:-(\w\w))?)?\.(\w+)$/;
+const localePattern = /(.+?)(?:\.(\w\w)(?:-(\w\w))?)?\.(\w+)$/;
 const defaultExtensionOrder = ['md'] as const;
 
 

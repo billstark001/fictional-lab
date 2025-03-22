@@ -27,7 +27,7 @@ export default function getMetadata(filename: string, pageContext: LocaleRecord)
   for (const l of [assignedLocale, languageCode, defaultLocale]) {
     const p = _l[l];
     if (p) {
-      locale = l;
+      locale = articlesModule[p].lang || l;
       currentFullPath = p;
       extension = extensionOrder.find(x => p.endsWith(x)) || extension;
       break;
@@ -35,7 +35,10 @@ export default function getMetadata(filename: string, pageContext: LocaleRecord)
   }
   if (!currentFullPath) {
     [locale, currentFullPath] = Object.entries(_l)[0] ?? [];
-    locale = locale ?? defaultLocale;
+    locale = articlesModule[currentFullPath].lang 
+      || locale 
+      || defaultLocale;
+    extension = extensionOrder.find(x => currentFullPath.endsWith(x)) || extension;
   }
   if (!currentFullPath || !fs.existsSync(currentFullPath)) {
     return undefined;

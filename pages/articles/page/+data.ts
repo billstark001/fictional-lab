@@ -6,7 +6,7 @@ import getMetadata from "../common/getMetadata";
 
 export default function data(pageContext: PageContext) {
 
-  const { filename } = pageContext.routeParams;
+  const filename = pageContext.routeParams['*'];
 
   const payload = getMetadata(filename, pageContext as unknown as LocaleRecord);
 

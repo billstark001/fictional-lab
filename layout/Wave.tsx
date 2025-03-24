@@ -113,9 +113,9 @@ export const Wave = (props: SVGAttributes<SVGElement>) => {
 
   return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"
     {...rest}>
-    <path d={d1} fill="var(--gray-7)" opacity='33%' />
-    <path d={d2} fill="var(--gray-7)" opacity='66%' />
-    <path d={d3} fill="var(--gray-7)" />
+    <path d={d1} fill="var(--gray-95)" opacity='33%' />
+    <path d={d2} fill="var(--gray-95)" opacity='66%' />
+    <path d={d3} fill="var(--gray-95)" />
     {children}
   </svg>;
 };

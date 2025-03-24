@@ -9,10 +9,10 @@ import { Logo } from './NavBar';
 import FooterContent from './FooterContent';
 
 const FooterContainer = styled.div`
-  border-top: 1px solid var(--gray-5);
+  border-top: 1px solid var(--gray-60);
   width: 100%;
 
-  background-color: var(--blue-6);
+  background-color: var(--blue-80);
 `;
 
 const MapWrapper = styled.div`

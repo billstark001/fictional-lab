@@ -29,7 +29,7 @@ const MenuContainer = styled.div`
   right: -240px;
   height: 100vh;
   overflow-y: auto;
-  background-color: var(--blue-7);
+  background-color: var(--blue-95);
   transition: all 0.3s ease;
 
   &.active {
@@ -42,7 +42,7 @@ const MenuContainer = styled.div`
   justify-content: space-between;
 
   /* border & shadow */
-  border-left: 1px solid var(--gray-4);
+  border-left: 1px solid var(--gray-50);
   box-shadow: 0 0 10px #0003;
   ${darkModeQuery} & {
     box-shadow: 0 0 10px #fff1;

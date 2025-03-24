@@ -20,8 +20,8 @@ const NavBarContainer = styled.div`
   position: fixed;
   top: 0; 
   width: 100%;
-  background-color: var(--gray-7);
-  border-bottom: 1px solid var(--gray-5);
+  background-color: var(--gray-95);
+  border-bottom: 1px solid var(--gray-60);
   z-index: 50;
 
   backdrop-filter: blur(10px);

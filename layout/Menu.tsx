@@ -16,8 +16,8 @@ export type MenuWrapperProps = {
 };
 
 const MenuWrapper = styled.div<MenuWrapperProps>`
-  background-color: var(--gray-7);
-  border: 1px solid var(--gray-5);
+  background-color: var(--gray-95);
+  border: 1px solid var(--gray-60);
   box-shadow: 0 0 20px #00000030;
 
   display: flex;
@@ -55,7 +55,7 @@ const MenuWrapper = styled.div<MenuWrapperProps>`
   }
 
   & > .menu-item:nth-child(1n+2) {
-    border-top: 1px solid var(--gray-6);
+    border-top: 1px solid var(--gray-80);
   }
 
 `;

@@ -64,8 +64,8 @@ const LinkButtonFrame = styled.button`
     background: inherit;
   }
 
-  border: 1px solid var(--blue-3);
-  color: var(--blue-1);
+  border: 1px solid var(--blue-40);
+  color: var(--blue-5);
 
   display: flex;
   flex-direction: row;

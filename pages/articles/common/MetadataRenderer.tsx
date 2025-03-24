@@ -4,13 +4,13 @@ import { css, cx } from '@linaria/core';
 
 // 定义样式
 const container = css`
-  color: var(--gray-1);
+  color: var(--gray-5);
   margin-bottom: 1.5rem;
   font-family: 'Arial', sans-serif;
 
   &.card {
     padding: 16px;
-    border: 1px solid var(--gray-4);
+    border: 1px solid var(--gray-50);
     border-radius: 20px;
   }
 `;
@@ -23,7 +23,7 @@ const titleStyle = css`
 
 const descStyle = css`
   font-size: 1rem;
-  color: var(--gray-3);
+  color: var(--gray-40);
   margin-bottom: 1rem;
 `;
 
@@ -38,10 +38,10 @@ const metaRow = css`
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
-  color: var(--gray-4);
+  color: var(--gray-50);
 
   svg {
-    color: var(--blue-4);
+    color: var(--blue-40);
   }
 `;
 
@@ -51,8 +51,8 @@ const tagsStyle = css`
   gap: 0.5rem;
 
   span {
-    background-color: var(--blue-6);
-    color: var(--gray-1);
+    background-color: var(--blue-80);
+    color: var(--gray-5);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
     font-size: 0.85rem;

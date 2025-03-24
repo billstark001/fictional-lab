@@ -15,8 +15,8 @@ const DropdownMenuContainer = styled.div`
   height: max-content;
   max-height: 0px;
   overflow: hidden;
-  background-color: var(--blue-5);
-  color: var(--gray-1);
+  background-color: var(--blue-60);
+  color: var(--gray-5);
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
   transition: max-height 1.2s ease;
 `;
@@ -24,9 +24,9 @@ const DropdownMenuContainer = styled.div`
 const DropdownMenuItem = styled.div`
   width: 100%;
   &:not(:last-child) {
-    border-bottom: 1px solid var(--gray-3);
+    border-bottom: 1px solid var(--gray-40);
   }
-  --left-color: var(--blue-4);
+  --left-color: var(--blue-50);
   padding: 12px 8px 12px 16px;
   position: relative;
   display: block;
@@ -48,7 +48,7 @@ const DropdownMenuItem = styled.div`
   }
 
   &.match {
-    --left-color: var(--blue-1);
+    --left-color: var(--blue-5);
   }
 `;
 
@@ -57,7 +57,7 @@ const LinkAnchorContainer = styled.div`
 
   padding-top: 2px;
 
-  --underscore-color: var(--blue-3);
+  --underscore-color: var(--blue-40);
   --underscore-length: 0%;
   --underscore-pos: 50%;
   --underscore-thickness: 2px;

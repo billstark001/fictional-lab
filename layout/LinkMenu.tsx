@@ -16,8 +16,8 @@ const MainMenuItem = styled.a`
 
   font-size: large;
 
-  color: var(--gray-1);
-  border-bottom: 1px solid var(--blue-4);
+  color: var(--gray-5);
+  border-bottom: 1px solid var(--blue-50);
 
   &.match {
     position: relative;
@@ -30,7 +30,7 @@ const MainMenuItem = styled.a`
       left: 4px;
       width: 6px;
       border-radius: 10000px;
-      background-color: var(--blue-3);
+      background-color: var(--blue-40);
     }
   }
 `;
@@ -41,7 +41,7 @@ const SubMenuItem = styled.a`
   margin-left: 16px;
 
   text-decoration: none;
-  color: var(--gray-2);
+  color: var(--gray-20);
 
   &.match {
     position: relative;
@@ -53,11 +53,11 @@ const SubMenuItem = styled.a`
       left: -12px;
       width: 6px;
       border-radius: 10000px;
-      background-color: var(--blue-4);
+      background-color: var(--blue-50);
     }
   }
 
-  border-top: 1px solid var(--blue-5);
+  border-top: 1px solid var(--blue-60);
   &:first-child {
     border-top: none;
   }

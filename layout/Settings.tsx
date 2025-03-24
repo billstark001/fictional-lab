@@ -29,7 +29,7 @@ function Language(props: {
       cursor: pointer;
 
       &:not(:first-child) {
-        border-top: 1px solid var(--gray-4);
+        border-top: 1px solid var(--gray-50);
       }
     }
   `}>

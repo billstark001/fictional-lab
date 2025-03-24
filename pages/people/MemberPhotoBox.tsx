@@ -49,7 +49,7 @@ const Name = styled.h3`
 const Year = styled.span`
   font-size: 0.9rem;
   font-weight: normal;
-  color: var(--gray-2);
+  color: var(--gray-20);
   margin-left: 0.5rem;
 `;
 
@@ -58,12 +58,12 @@ const Email = styled.a`
   align-items: center;
   justify-content: center;
   margin-bottom: 0.75rem;
-  color: var(--blue-4);
+  color: var(--blue-50);
   text-decoration: none;
   font-size: 0.9rem;
   
   &:hover {
-    color: var(--blue-3)
+    color: var(--blue-40)
   }
   
   svg {
@@ -76,7 +76,7 @@ const ResearchArea = styled.p`
   font-size: 0.9rem;
   text-align: left;
   width: 100%;
-  color: var(--gray-2);
+  color: var(--gray-20);
 `;
 
 

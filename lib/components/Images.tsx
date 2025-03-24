@@ -21,7 +21,7 @@ export const FullWidthImage = (props: {
     <div
       className={cx(css`
         text-align: center;
-        color: var(--gray-4);
+        color: var(--gray-50);
         margin: 8px auto 16px auto;
       `, className)}
       {...rest}

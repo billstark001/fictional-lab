@@ -24,18 +24,18 @@ const ImageBox = styled.img`
   width: var(--length);
   min-height: calc(var(--length) * 9 / 16);
 
-  border: 1px solid var(--gray-4);
+  border: 1px solid var(--gray-50);
   border-radius: 12px;
 `;
 
 const TitleBox = styled.h1`
   text-align: center;
-  color: var(--blue-1);
+  color: var(--blue-5);
 `;
 
 const ContentBox = styled.p`
   line-height: 1.5em;
-  color: var(--gray-3);
+  color: var(--gray-40);
 `;
 
 

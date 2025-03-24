@@ -15,8 +15,8 @@ const tagsStyle = css`
   gap: 0.5rem;
 
   span {
-    background-color: var(--blue-6);
-    color: var(--gray-1);
+    background-color: var(--blue-80);
+    color: var(--gray-5);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
     font-size: 0.85rem;
@@ -82,7 +82,7 @@ const NewsCardContainer = styled.div`
   &::before {
     content: '';
     position: absolute;
-    background-color: var(--cyan-5);
+    background-color: var(--cyan-60);
     width: 4px;
     height: 100%;
     left: 10.5px;
@@ -94,11 +94,11 @@ const NewsImage = styled.img`
   max-height: 400px;
   width: 100%;
   border-radius: 12px;
-  border: 1px solid var(--gray-4);
+  border: 1px solid var(--gray-50);
 ` as unknown as FC<ImgHTMLAttributes<HTMLImageElement>>;
 
 const DateContainer = styled.div`
-  color: var(--blue-3);
+  color: var(--blue-40);
   font-size: large;
   font-weight: bold;
 `;
@@ -106,8 +106,8 @@ const DateContainer = styled.div`
 const TimelineCircle = styled.div`
   width: 25px;
   height: 25px;
-  background-color: var(--gray-7);
-  border: 4px solid var(--cyan-4);
+  background-color: var(--gray-95);
+  border: 4px solid var(--cyan-50);
   border-radius: 50%;
   z-index: 1;
 

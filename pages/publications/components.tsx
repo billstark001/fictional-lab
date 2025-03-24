@@ -22,7 +22,7 @@ const ErrorCard = (props: { errors?: string[], raw: string }) => {
   }
   return <div className={css`
     color: red;
-    border: 1px solid var(--gray-4);
+    border: 1px solid var(--gray-50);
     border-radius: 0.5em;
     padding: 1em;
   `}>
@@ -103,7 +103,7 @@ const PublicationWrapper = styled.div`
 `;
 
 const DOILink = styled.a`
-  color: var(--blue-3);
+  color: var(--blue-40);
   text-decoration: none;
 
   margin: 0 6px;

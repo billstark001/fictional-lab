@@ -33,7 +33,7 @@ const PhotoSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--gray-6);
+  background-color: var(--gray-80);
   border-radius: 20px;
 
   min-width: 400px;
@@ -86,7 +86,7 @@ const SubInfo = styled.p`
 const Divider = styled.hr`
   border: 0;
   height: 1px;
-  background-color: var(--gray-6);
+  background-color: var(--gray-80);
   margin: 20px 0;
 `;
 
@@ -110,14 +110,14 @@ const Links = styled.div`
   gap: 10px;
   
   a {
-    color: var(--blue-4);
+    color: var(--blue-50);
     display: flex;
     align-items: center;
     text-decoration: none;
     transition: color 0.3s;
     
     &:hover {
-      color: var(--blue-3);
+      color: var(--blue-40);
     }
     
     svg {

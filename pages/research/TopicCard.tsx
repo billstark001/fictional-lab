@@ -9,7 +9,7 @@ const TopicContainer = styled.div`
   flex-direction: row;
   align-items: stretch;
 
-  border: 1px solid var(--gray-5);
+  border: 1px solid var(--gray-60);
   border-radius: 20px;
 
   padding: 0.8em;

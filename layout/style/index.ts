@@ -96,14 +96,14 @@ export const globalStyles = css`
 
     a {
       text-decoration: none;
-      color: var(--blue-2);
+      color: var(--blue-20);
       transition: all 0.1s ease;
 
       &:hover {
-        color: var(--blue-1);
+        color: var(--blue-5);
       }
       &:active {
-        color: var(--blue-3);
+        color: var(--blue-40);
       }
     }
     
@@ -112,8 +112,8 @@ export const globalStyles = css`
       padding: 0;
       font-family: sans-serif;
 
-      color: var(--gray-1);
-      background-color: var(--gray-7);
+      color: var(--gray-5);
+      background-color: var(--gray-95);
 
       line-height: 1.6;
     }
@@ -166,7 +166,7 @@ export const globalStyles = css`
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-      background: var(--gray-6);
+      background: var(--gray-80);
       transform: none;
       box-shadow: none;
     }
@@ -179,8 +179,8 @@ export const globalStyles = css`
       font-size: small;
       margin: 0;
       padding: 1em 1.5em;
-      border-left: 1px solid var(--blue-2);
-      background-color: var(--gray-6);
+      border-left: 1px solid var(--blue-20);
+      background-color: var(--gray-80);
       overflow-wrap: break-word;
     }
 
@@ -201,12 +201,12 @@ export const globalStyles = css`
       margin-bottom: 0.8em;
       font-weight: 600;
       line-height: 1.2;
-      color: var(--gray-2);
+      color: var(--gray-20);
     }
 
     h1 {
       font-size: 2.5rem;
-      border-bottom: 1px solid var(--blue-6);
+      border-bottom: 1px solid var(--blue-80);
       padding-bottom: 0.3em;
 
       &.no-border {
@@ -216,7 +216,7 @@ export const globalStyles = css`
 
     h2 {
       font-size: 2rem;
-      border-bottom: 1px solid var(--gray-6);
+      border-bottom: 1px solid var(--gray-80);
       padding-bottom: 0.2em;
 
       &.no-border {
@@ -226,22 +226,22 @@ export const globalStyles = css`
 
     h3 {
       font-size: 1.5rem;
-      color: var(--blue-2);
+      color: var(--blue-20);
     }
 
     h4 {
       font-size: 1.25rem;
-      color: var(--gray-3);
+      color: var(--gray-40);
     }
 
     h5 {
       font-size: 1rem;
-      color: var(--gray-3);
+      color: var(--gray-40);
     }
 
     h6 {
       font-size: 0.875rem;
-      color: var(--gray-3);
+      color: var(--gray-40);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -273,7 +273,7 @@ export const globalStyles = css`
     }
 
     .heading-accent {
-      color: var(--blue-3)
+      color: var(--blue-40)
     }
 
     /* 响应式设计 */

@@ -51,8 +51,6 @@ export default assets;
   return ret;
 }
 
-
-
 function generateMetadataModule(metadataMap: ReadonlyMap<string, Metadata>): string {
 
   const toVariableName = _v();

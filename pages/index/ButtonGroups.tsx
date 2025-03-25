@@ -4,8 +4,7 @@ import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { css, cx } from "@linaria/core";
 import { HTMLAttributes } from "react";
-import { FaNewspaper } from "react-icons/fa";
-import { FaMicrochip } from "react-icons/fa6";
+import { FaNewspaper, FaMicrochip } from "react-icons/fa6";
 
 
 export const TopButtonGroup = (props: HTMLAttributes<HTMLDivElement>) => {

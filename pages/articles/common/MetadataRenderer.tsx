@@ -1,4 +1,4 @@
-import { FaCalendarAlt, FaUser } from 'react-icons/fa';
+import { FaCalendar, FaUser } from 'react-icons/fa6';
 import { Metadata } from '@/lib/metadata/parseMetadata';
 import { css, cx } from '@linaria/core';
 
@@ -131,7 +131,7 @@ export function MetadataRenderer(props: MetadataRendererProps) {
 
         {created && (
           <div className={metaRow}>
-            <FaCalendarAlt />
+            <FaCalendar />
             <span>
               {translations.created}: {new Date(created).toLocaleDateString(lang)}
             </span>
@@ -140,7 +140,7 @@ export function MetadataRenderer(props: MetadataRendererProps) {
 
         {updated && (
           <div className={metaRow}>
-            <FaCalendarAlt />
+            <FaCalendar />
             <span>
               {translations.updated}: {new Date(updated).toLocaleDateString(lang)}
             </span>

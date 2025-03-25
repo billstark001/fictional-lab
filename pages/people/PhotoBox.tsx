@@ -3,8 +3,14 @@ import { mediaQueryLessOrEqual } from '@/lib/responsive';
 import { css } from '@linaria/core';
 import { styled } from '@linaria/react';
 import { ReactNode } from 'react';
-import { FaEnvelope, FaResearchgate, FaGraduationCap, FaGoogleScholar, FaLinkedin, FaTwitter } from 'react-icons/fa6';
-import { IconType } from 'react-icons/lib';
+import { 
+  FaEnvelope, 
+  FaResearchgate, 
+  FaGraduationCap, 
+  FaGoogleScholar, 
+  FaLinkedin, 
+  FaTwitter 
+} from 'react-icons/fa6';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -141,7 +147,7 @@ export type PhotoBoxProps = {
 type LinkDefinition = {
   name: string,
   prefix: string,
-  icon: IconType,
+  icon: ReactNode,
   desc?: 'use-value' | string | ReactNode,
 };
 
@@ -149,37 +155,37 @@ const linkDefs: readonly Readonly<LinkDefinition>[] = [
   {
     name: 'email',
     prefix: 'mailto:',
-    icon: FaEnvelope,
+    icon: <FaEnvelope />,
     desc: 'use-value',
   },
   {
     name: 'twitter',
     prefix: 'https://x.com/',
-    icon: FaTwitter,
+    icon: <FaTwitter />,
     desc: 'Twitter / X',
   },
   {
     name: 'linkedIn',
     prefix: 'https://www.linkedin.com/in/',
-    icon: FaLinkedin,
+    icon: <FaLinkedin />,
     desc: 'LinkedIn',
   },
   {
     name: 'researchMap',
     prefix: 'https://researchmap.jp/',
-    icon: FaResearchgate,
+    icon: <FaResearchgate />,
     desc: 'ResearchMap',
   },
   {
     name: 'researchGate',
     prefix: 'https://researchmap.jp/',
-    icon: FaResearchgate,
+    icon: <FaResearchgate />,
     desc: 'ResearchGate',
   },
   {
     name: 'googleScholar',
     prefix: 'https://scholar.google.com/citations?user=',
-    icon: FaGoogleScholar,
+    icon: <FaGoogleScholar />,
     desc: 'Google Scholar',
   }
 ];
@@ -213,7 +219,7 @@ const PhotoBox = (props: PhotoBoxProps) => {
             ? l
             : d.desc;
             return <a key={d.name} href={d.prefix + l} target='_blank' rel='noreferrer'>
-              <d.icon /> {desc}
+              {d.icon} {desc}
             </a>;
         })}
           

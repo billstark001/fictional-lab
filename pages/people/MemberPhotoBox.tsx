@@ -1,6 +1,5 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, SVGProps } from 'react';
 import { styled } from '@linaria/react';
-import { MdEmail } from 'react-icons/md';
 import { mediaQueryLessOrEqual, mediaQueryMoreOrEqual } from '@/lib/responsive';
 import { useLocaleRecord } from '@/lib/locale/useLocaleRecord';
 import Localized from '@/lib/locale/Localized';
@@ -104,6 +103,15 @@ const noDescTag = <Localized
   No description.
 </Localized>;
 
+// for unknown reason, importing this icon from react-icons
+// will cause significant rendering slack
+function MdEmail(props: SVGProps<SVGSVGElement>) {
+  return <svg viewBox='0 0 24 24' height='1em' fill='currentColor' {...props}>
+    <path fill='none' d='M0 0h24v24H0z' />
+    <path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z' />
+  </svg>;
+};
+
 export const MemberPhotoBox: React.FC<MemberPhotoBoxProps> = ({
   name,
   email,
@@ -121,7 +129,7 @@ export const MemberPhotoBox: React.FC<MemberPhotoBoxProps> = ({
         {!!academicYear && <Year>({academicYear})</Year>}
       </Name>
       {!!email && <Email href={`mailto:${email}`}>
-        <MdEmail size={18} />
+        <MdEmail />
         {email}
       </Email>}
       <ResearchArea>{researchArea || noDescTag}</ResearchArea>

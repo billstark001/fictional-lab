@@ -1,7 +1,7 @@
 import Localized from "@/lib/locale/Localized";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { css } from "@linaria/core";
-import { FaHome } from "react-icons/fa";
+import { IoIosHome } from "react-icons/io";
 import { usePageContext } from "vike-react/usePageContext";
 
 const BackToHomepage = () => {
@@ -17,7 +17,7 @@ const BackToHomepage = () => {
           gap: 10px;
         `}
       >
-        <FaHome />
+        <IoIosHome />
         <Localized>
           {({ languageCode }) => {
             if (languageCode === 'ja') {

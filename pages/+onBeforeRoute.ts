@@ -6,8 +6,8 @@ import type { OnBeforeRouteSync } from 'vike/types';
  
 const onBeforeRoute: OnBeforeRouteSync = (pageContext): ReturnType<OnBeforeRouteSync> => {
   
-  const { pathname, href } = pageContext.urlParsed;
-  const extracted = extractLocale(pathname, href);
+  const { pathname } = pageContext.urlParsed;
+  const extracted = extractLocale(pathname);
 
   return {
     pageContext: {

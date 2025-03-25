@@ -333,4 +333,4 @@ export const framedByMaxWidth = Object.freeze({
   'padding-left': 'var(--layout-min-gap)',
   'padding-right': 'var(--layout-min-gap)',
   margin: '0 auto',
-} as const);
+});

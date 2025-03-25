@@ -2,9 +2,11 @@ import react from '@vitejs/plugin-react';
 import vike from 'vike/plugin';
 import { loadEnv, UserConfig } from 'vite';
 import wyw from '@wyw-in-js/vite';
+// import babel from 'vite-plugin-babel';
 import transformAssets from './vite-plugins/transform-assets';
 import collectMetadataAndResources from './vite-plugins/collect-metadata-and-resources';
 import forceCss200 from './vite-plugins/force-css-200';
+// import devServer from "@hono/vite-dev-server";
 
 const mode = process.env.NODE_ENV;
 if (mode) {
@@ -16,9 +18,7 @@ const config: UserConfig = {
   plugins: [
     wyw({
       include: ['**/*.{ts,tsx}'],
-      babelOptions: {
-        presets: ['@babel/preset-typescript', '@babel/preset-react'],
-      },
+      exclude: ['node_modules/**'],
     }),
     transformAssets(),
     collectMetadataAndResources({
@@ -40,8 +40,25 @@ const config: UserConfig = {
     }),
     react(),
     vike(),
+    // devServer({
+    //   entry: "hono-entry.ts",
+    //   exclude: [
+    //     /^\/@.+$/,
+    //     /.*\.(ts|tsx|vue)($|\?)/,
+    //     /.*\.(s?css|less)($|\?)/,
+    //     /^\/favicon\.ico$/,
+    //     /.*\.(svg|png)($|\?)/,
+    //     /^\/(public|assets|static)\/.+/,
+    //     /^\/node_modules\/.*/,
+    //   ],
+    //   injectClientScript: false,
+    // }),
     forceCss200(),
   ],
+  optimizeDeps: {
+    include: ['react-icons/fa6', 'react-icons/md'],
+    force: true
+  },
   resolve: {
     alias: {
       '@': __dirname

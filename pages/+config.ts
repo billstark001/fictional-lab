@@ -1,4 +1,5 @@
 import vikeReact from "vike-react/config";
+// import vikeServer from 'vike-server/config';
 import type { Config } from "vike/types";
 import Layout from "../layout/Layout";
 
@@ -15,7 +16,11 @@ export default {
   description: "Fictional Lab",
   passToClient: ['urlLogical', 'locale', 'languageCode', 'areaCode'],
 
+
+  // server: 'server/index.js',
+
   extends: [
     vikeReact,
+    // vikeServer,
   ],
 } satisfies Config;

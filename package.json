@@ -1,4 +1,5 @@
 {
+  "name": "fictional-lab",
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",
@@ -73,6 +74,5 @@
     "onlyBuiltDependencies": [
       "esbuild"
     ]
-  },
-  "name": "fictional-lab"
+  }
 }

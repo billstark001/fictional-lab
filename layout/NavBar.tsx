@@ -1,168 +1,72 @@
-import { styled } from '@linaria/react';
 import { FaBars, FaBarsStaggered } from "react-icons/fa6";
-import { darkModeQuery } from '@/lib/theme';
-import { css, cx } from '@linaria/core';
 import { useEffect, useRef, useState } from 'react';
-import { mediaQueryMoreOrEqual, mediaQueryLessOrEqual } from '@/lib/responsive';
 import { useDisclosure } from '@/lib/react/useDisclosure';
-import { framedByMaxWidth } from './style';
 import { throttle } from "throttle-debounce";
-
-// import logoC from '../assets/img/logo_c.png';
-// import logoW from '../assets/img/logo_w.png';
 import NavMenu from './NavMenu';
 import { IconButton } from '@/lib/components/Buttons';
 import Settings from './Settings';
 import Links from './Links';
 import useWithLocale from '@/lib/locale/useWithLocale';
-
-const NavBarContainer = styled.div`
-  position: fixed;
-  top: 0; 
-  width: 100%;
-  background-color: var(--gray-95);
-  border-bottom: 1px solid var(--gray-60);
-  z-index: 50;
-
-  backdrop-filter: blur(10px);
-  transition: background-color 0.1 ease;
-  box-shadow: 0 0 10px #0003;
-
-  ${darkModeQuery} & {
-    box-shadow: 0 0 10px #fff1;
-  }
-
-  &.transparent {
-    background-color: #ffffff18;
-    color: black;
-    border-bottom: 1px solid dimgray;
-
-    ${darkModeQuery} & {
-      background-color: #00000018;
-      color: white;
-    }
-  }
-`;
-
-const NavBarWrapper = styled.div`
-  padding: 20px;
-  height: 80px;
-  ${framedByMaxWidth}
-
-  ${mediaQueryLessOrEqual('sm')} {
-    height: 64px;
-    padding: 16px;
-  }
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 1.8em;
-
-  & > .container {
-    display: flex;
-    gap: 10px;
-  }
-`;
-
-const LogoWrapper = styled.div`
-  /* width: 240px; */
-  font-size: 48px;
-  font-weight: bold;
-  font-family: 'Times New Roman', Times, serif;
-  height: min-content;
-  line-height: 100%;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
-  ${mediaQueryLessOrEqual('sm')} {
-    font-size: 36px;
-  }
-`;
+import * as styles from './navbar.css';
 
 export function Logo() {
   return (
-    <LogoWrapper>
+    <div className={styles.logoWrapper}>
       Fictional Lab
-      {/* <img src={variation === 'colorful' ? logoC : logoW} /> */}
-    </LogoWrapper>
+    </div>
   );
 }
-
-
-const hideOnLgSize = css`
-  ${mediaQueryMoreOrEqual('lg')} {
-    display: none; 
-  }
-`;
-
 
 export function NavBar() {
   const d = useDisclosure();
   const ref = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
   const [isTransparent, setIsTransparent] = useState(true);
 
   useEffect(() => {
     const _h = () => {
-      const height = document.documentElement.scrollTop;
-      const isTransparent = height < 650;
-      setIsTransparent(isTransparent);
+      setIsTransparent(document.documentElement.scrollTop < 650);
     };
-
     const h = throttle(50, _h);
-
     _h();
     document.addEventListener('scroll', h);
-    return () => {
-      document.removeEventListener("scroll", h);
-    };
+    return () => document.removeEventListener('scroll', h);
   }, []);
 
   const withLocale = useWithLocale();
 
+  const containerClass = [
+    styles.navBarContainer,
+    isTransparent && styles.navBarContainerTransparent,
+  ].filter(Boolean).join(' ');
+
   return (
-    <NavBarContainer ref={containerRef} className={cx(isTransparent && 'transparent')}>
-      <NavBarWrapper>
-        <div className='container'>
-          <a href={withLocale('/')} className={css`
-            color: inherit;
-            transition: opacity 0.1s ease-in-out;
-            &:hover { color: inherit; opacity: 0.7; }
-            &:active { color: inherit; opacity: 0.8; }
-          `}>
+    <div ref={containerRef} className={containerClass}>
+      <div className={styles.navBarWrapper}>
+        <div className={styles.navBarInnerContainer}>
+          <a href={withLocale('/')} className={styles.logoLink}>
             <Logo />
           </a>
         </div>
-
-        <div className='container'>
+        <div className={styles.navBarInnerContainer}>
           <Links />
-
           <IconButton
-            className={hideOnLgSize}
+            className={styles.hideOnLgSize}
             ref={ref}
             onClick={d.onToggle}
           >
             {d.isOpen ? <FaBarsStaggered /> : <FaBars />}
           </IconButton>
           <NavMenu active={d.isOpen} onClose={d.onClose} footer={
-            <div className={css`
-              display: flex;
-              flex-direction: row;
-              gap: 16px;
-            `}>
+            <div className={styles.navMenuFooter}>
               <Settings />
             </div>
           }>
             <Links isMenu />
           </NavMenu>
         </div>
-      </NavBarWrapper>
-    </NavBarContainer>
+      </div>
+    </div>
   );
 }
 

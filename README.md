@@ -9,7 +9,7 @@ A research laboratory homepage template designed to be easily deployed with mini
 | [React](https://reactjs.org/) | UI library |
 | [Vite](https://vitejs.dev/) | Build tool & dev server |
 | [Vike](https://vike.dev/) | SSG/SSR framework |
-| [Linaria / wyw-in-js](https://github.com/callstack/linaria) | Zero-runtime CSS-in-JS |
+| [vanilla-extract](https://vanilla-extract.style/) | Zero-runtime CSS-in-JS |
 | [Luxon](https://moment.github.io/luxon/) | Date/time handling |
 | [React Markdown](https://github.com/remarkjs/react-markdown) | Markdown rendering |
 | [React Icons](https://react-icons.github.io/react-icons/) | Icon library |

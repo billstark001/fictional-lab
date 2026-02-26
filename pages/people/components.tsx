@@ -1,12 +1,6 @@
-import { styled } from '@linaria/react';
+import { HTMLAttributes } from 'react';
+import * as styles from './people.css';
 
-export const Container = styled.div`
-  position: relative;
-
-  h1 {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-`;
+export const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={[styles.peopleContainer, className].filter(Boolean).join(' ')} {...props} />
+);

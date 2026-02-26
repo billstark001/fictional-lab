@@ -1,15 +1,6 @@
-import { styled } from "@linaria/react";
-import { mediaQueryLessOrEqual } from "@/lib/responsive";
+import { HTMLAttributes } from "react";
+import * as styles from './index.css';
 
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
-  ${mediaQueryLessOrEqual('md')} {
-    & {
-      flex-direction: column;
-    }
-  }
-`;
+export const Container = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={[styles.indexContainer, className].filter(Boolean).join(' ')} {...props} />
+);

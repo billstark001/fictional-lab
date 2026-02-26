@@ -1,6 +1,6 @@
-import { css, cx } from "@linaria/core";
 import { IframeHTMLAttributes } from "react";
-import { useTheme, useThemeQuery } from "./theme";
+import { useThemeQuery } from "./theme";
+import * as styles from './map.css';
 
 export type MapEmbedProps = {
   latitude?: number;
@@ -9,12 +9,6 @@ export type MapEmbedProps = {
   zoom?: number;
   additionalParams?: string;
 } & IframeHTMLAttributes<HTMLIFrameElement>;
-
-const mapFrame = css`
-  width: 100%;
-  height: 100%;
-  border: 0;
-`;
 
 const MapEmbed = (props: MapEmbedProps) => {
   const {
@@ -34,9 +28,7 @@ const MapEmbed = (props: MapEmbedProps) => {
       case "google":
         return `https://www.google.com/maps/embed/v1/view?key=YOUR_GOOGLE_API_KEY&center=${latitude},${longitude}&zoom=${zoom}&maptype=roadmap${_p}`;
       case "openstreetmap":
-        return `https://www.openstreetmap.org/export/embed.html?bbox=${longitude -
-          0.03}%2C${latitude - 0.03}%2C${longitude + 0.03}%2C${latitude +
-          0.03}&layer=mapnik${_p}`;
+        return `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.03}%2C${latitude - 0.03}%2C${longitude + 0.03}%2C${latitude + 0.03}&layer=mapnik${_p}`;
       case "amap":
         return `https://amap.com/maps?center=${longitude},${latitude}&zoom=${zoom}${_p}`;
       default:
@@ -48,7 +40,7 @@ const MapEmbed = (props: MapEmbedProps) => {
 
   return <iframe
     src={getMapUrl()}
-    className={cx(mapFrame, className)}
+    className={[styles.mapFrame, className].filter(Boolean).join(' ')}
     allowFullScreen
     loading="lazy"
     title="Map Embed"

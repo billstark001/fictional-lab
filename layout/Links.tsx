@@ -1,18 +1,10 @@
 import Localized from "@/lib/locale/Localized";
 import Link from "./Link";
-import { css, cx } from "@linaria/core";
-import { mediaQueryLessOrEqual } from "@/lib/responsive";
-
-
-const showOnLgSize = css`
-  ${mediaQueryLessOrEqual('md')} {
-    display: none;
-  }
-`;
+import * as styles from './links.css';
 
 export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: boolean }) => {
   const additionalProps: any = !isMenu
-    ? { className: cx(showOnLgSize) } 
+    ? { className: styles.showOnLgSize }
     : { variant: "menu" };
 
   const translations: Record<string, Record<string, string>> = {
@@ -54,8 +46,7 @@ export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: bool
   return (
     <Localized>
       {({ languageCode }) => {
-        const t = translations[languageCode] || translations.en; // Default to English if languageCode is not supported
-
+        const t = translations[languageCode] || translations.en;
         return (
           <>
             <Link
@@ -87,21 +78,9 @@ export const Links = ({ onClick, isMenu }: { onClick?: () => void; isMenu?: bool
               to="/publications"
               label={t.publications}
               subs={[
-                {
-                  to: "/publications#working",
-                  label: t.workingPublications,
-                  exactMatch: true,
-                },
-                {
-                  to: "/publications#journal",
-                  label: t.journalPapers,
-                  exactMatch: true,
-                },
-                {
-                  to: "/publications#conf",
-                  label: t.conferencePapers,
-                  exactMatch: true,
-                },
+                { to: "/publications#working", label: t.workingPublications, exactMatch: true },
+                { to: "/publications#journal", label: t.journalPapers, exactMatch: true },
+                { to: "/publications#conf", label: t.conferencePapers, exactMatch: true },
               ]}
               onClick={onClick}
               {...additionalProps}

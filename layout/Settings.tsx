@@ -1,38 +1,16 @@
 import { IconButton } from "@/lib/components/Buttons";
 import { useSetLocale } from "@/lib/locale/useSetLocale";
-import { darkModeQuery, lightModeQuery, useTheme } from "@/lib/theme";
+import { useTheme } from "@/lib/theme";
 import { useDisclosure } from "@/lib/react/useDisclosure";
 import { useState, useCallback, MouseEvent } from "react";
 import { FaMoon, FaSun, FaEarthAsia } from "react-icons/fa6";
 import { Menu } from "./Menu";
 import Localized from "@/lib/locale/Localized";
-import { css } from "@linaria/core";
+import * as styles from './settings.css';
 
-function Language(props: {
-  onSelect?: (lang: string) => void,
-}) {
-  return <div className={css`
-    display: flex;
-    flex-direction: column;
-    padding: 4px;
-
-    width: 140px;
-
-    font-size: large;
-    text-align: center;
-
-    div {
-      margin: 0 12px;
-      padding: 8px 0;
-
-      cursor: pointer;
-
-      &:not(:first-child) {
-        border-top: 1px solid var(--gray-50);
-      }
-    }
-  `}>
-    <div onClick={() => props.onSelect?.('en')}>
+function Language(props: { onSelect?: (lang: string) => void }) {
+  return <div className={styles.languageMenu}>
+    <div className={styles.languageMenuItem} onClick={() => props.onSelect?.('en')}>
       <Localized>{
         ({ languageCode }) =>
           languageCode === 'ja' ? '英語'
@@ -40,7 +18,7 @@ function Language(props: {
               : 'English'
       }</Localized>
     </div>
-    <div onClick={() => props.onSelect?.('ja')}>
+    <div className={styles.languageMenuItem} onClick={() => props.onSelect?.('ja')}>
       <Localized>{
         ({ languageCode }) =>
           languageCode === 'ja' ? '日本語'
@@ -48,7 +26,7 @@ function Language(props: {
               : 'Japanese'
       }</Localized>
     </div>
-    <div onClick={() => props.onSelect?.('zh')}>
+    <div className={styles.languageMenuItem} onClick={() => props.onSelect?.('zh')}>
       <Localized>{
         ({ languageCode }) =>
           languageCode === 'ja' ? '中国語'
@@ -59,31 +37,14 @@ function Language(props: {
   </div>;
 }
 
-
-const hideOnDarkMode = css`
-  ${darkModeQuery} & {
-    display: none;
-  }
-`;
-
-const hideOnLightMode = css`
-  ${lightModeQuery} & { 
-    display: none;
-  }
-`;
-
 export const Settings = () => {
   const { toggleTheme } = useTheme();
-
   const [pos, setPos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
   const d = useDisclosure();
   const setLocale = useSetLocale();
 
   const onClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    setPos({
-      x: e.clientX,
-      y: e.clientY,
-    });
+    setPos({ x: e.clientX, y: e.clientY });
     d.onOpen();
     e.preventDefault();
     e.stopPropagation();
@@ -91,10 +52,9 @@ export const Settings = () => {
 
   return <>
     <IconButton onClick={toggleTheme}>
-      <FaMoon className={hideOnLightMode} />
-      <FaSun className={hideOnDarkMode} />
+      <FaMoon className={styles.hideOnLightMode} />
+      <FaSun className={styles.hideOnDarkMode} />
     </IconButton>
-
     <IconButton onClick={onClick}>
       <FaEarthAsia />
     </IconButton>
@@ -111,6 +71,5 @@ export const Settings = () => {
     </Menu>
   </>;
 };
-
 
 export default Settings;

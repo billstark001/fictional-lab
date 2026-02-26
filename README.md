@@ -5,7 +5,7 @@ A research laboratory homepage template designed to be easily deployed with mini
 ## Tech Stack
 
 | Package | Role |
-|---------|------|
+| ------- | ---- |
 | [React](https://reactjs.org/) | UI library |
 | [Vite](https://vitejs.dev/) | Build tool & dev server |
 | [Vike](https://vike.dev/) | SSG/SSR framework |
@@ -36,7 +36,7 @@ Edit `pages/index/WelcomeContent.tsx` and the data file `pages/index/+data.ts`.
 ### Adding content
 
 | Content type | Directory |
-|---|---|
+| ------------ | --------- |
 | News | `pages/news/_news/` |
 | Articles | `pages/articles/_articles/` |
 | People | `pages/people/` |
@@ -167,4 +167,3 @@ server/         — Hono SSR middleware
 assets/         — static assets
 patches/        — npm package patches (patch-package)
 ```
-

@@ -72,9 +72,9 @@ The `VITE_BASE_PATH` environment variable controls the URL prefix. Set it in `.e
 ## Development
 
 ```bash
-npm install       # install dependencies (only needed once)
-npm run dev       # start dev server at http://localhost:3000
-npm test          # run unit tests
+pnpm install      # install dependencies (only needed once)
+pnpm dev          # start dev server at http://localhost:3000
+pnpm test         # run unit tests
 ```
 
 ---
@@ -82,7 +82,7 @@ npm test          # run unit tests
 ## Building
 
 ```bash
-npm run build     # produces dist/client/ (static files) and dist/server/ (SSR entry)
+pnpm build        # produces dist/client/ (static files) and dist/server/ (SSR entry)
 ```
 
 ---
@@ -93,8 +93,8 @@ npm run build     # produces dist/client/ (static files) and dist/server/ (SSR e
 
 The project ships with a workflow at `.github/workflows/deploy.yaml` that:
 
-1. Checks out the repo and installs dependencies.
-2. Runs `npm run build` (SSG mode — `prerender: true` is set in `pages/+config.ts`).
+1. Checks out the repo and installs dependencies with pnpm.
+2. Runs `pnpm build` (SSG mode — `prerender: true` is set in `pages/+config.ts`).
 3. Uploads `dist/client/` as a Pages artifact and deploys it.
 
 **Steps to enable:**
@@ -108,10 +108,10 @@ The base path for the site defaults to `/<repo-name>` (set in `.env.production`)
 
 ```bash
 # build first
-npm run build
+pnpm build
 
 # publish dist/client/ to the gh-pages branch
-npm run publish
+pnpm publish
 ```
 
 This uses the [`gh-pages`](https://github.com/tschaub/gh-pages) CLI. Make sure the repository has the `gh-pages` branch enabled as the Pages source.
@@ -119,10 +119,10 @@ This uses the [`gh-pages`](https://github.com/tschaub/gh-pages) CLI. Make sure t
 ### Preview a static build locally
 
 ```bash
-npm run build
-npm run preview            # Vike's built-in preview server
+pnpm build
+pnpm preview            # Vike's built-in preview server
 # or
-npm run preview:python     # Python HTTP server on port 4000
+pnpm preview:python     # Python HTTP server on port 4000
 ```
 
 ### Server-side rendering (SSR)
@@ -130,8 +130,8 @@ npm run preview:python     # Python HTTP server on port 4000
 Run the Hono/Node.js server in production:
 
 ```bash
-npm run build
-npm run prod               # starts server on port 3000 (set PORT env var to change)
+pnpm build
+pnpm prod               # starts server on port 3000 (set PORT env var to change)
 ```
 
 The server serves static assets from `dist/client/` and renders uncached pages on the fly via `dist/server/`.
@@ -145,7 +145,7 @@ To switch from SSG to SSR, set `prerender: false` (or remove it) in `pages/+conf
 Unit tests cover the metadata parser, file utility, and Markdown parser:
 
 ```bash
-npm test
+pnpm test
 ```
 
 Tests are located in `lib/**/__tests__/` and use [Vitest](https://vitest.dev/). They are path-agnostic and run on Windows, macOS, and Linux.

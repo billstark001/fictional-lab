@@ -5,7 +5,6 @@
     "preview": "vike preview",
     "preview:python": "cd dist/client && python -m http.server 4000",
     "publish": "gh-pages -d dist/client",
-    "postinstall": "patch-package",
     "prod": "cross-env NODE_ENV=production tsx ./hono-entry.node.ts",
     "test": "vitest run"
   },
@@ -61,7 +60,6 @@
     "eslint-plugin-react": "^7.37.5",
     "gh-pages": "^6.3.0",
     "globals": "^17.3.0",
-    "patch-package": "^8.0.1",
     "tsx": "^4.21.0",
     "typescript-eslint": "^8.56.1",
     "vite-plugin-babel": "^1.5.1",
@@ -69,5 +67,13 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.59.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "bibtex-js-parser@1.1.6": "patches/bibtex-js-parser@1.1.6.patch"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

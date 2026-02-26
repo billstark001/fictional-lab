@@ -4,10 +4,11 @@ import { Metadata } from "@/lib/metadata/parseMetadata";
 import { DateTime } from "luxon";
 import { FC, HTMLAttributes, useMemo } from "react";
 import { FaCalendar } from "react-icons/fa";
+import cx from 'clsx';
 import * as styles from './index.css';
 
 export const NewsStack: FC<HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
-  <div className={[styles.newsStack, className].filter(Boolean).join(' ')} {...props} />
+  <div className={cx(styles.newsStack, className)} {...props} />
 );
 
 export const NewsBox = (props: Metadata & { to?: string }) => {

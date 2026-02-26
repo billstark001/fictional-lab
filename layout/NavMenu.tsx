@@ -2,6 +2,7 @@ import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { IconButton } from "@/lib/components/Buttons";
 import { IoMdClose } from "react-icons/io";
+import cx from 'clsx';
 import * as styles from './navmenu.css';
 
 export const NavMenu = (props: PropsWithChildren<{
@@ -27,10 +28,10 @@ export const NavMenu = (props: PropsWithChildren<{
   return ReactDOM.createPortal(
     <>
       <div
-        className={[styles.menuOverlay, isVisible && styles.menuOverlayActive].filter(Boolean).join(' ')}
+        className={cx(styles.menuOverlay, isVisible && styles.menuOverlayActive)}
         onClick={onClose}
       />
-      <div className={[styles.menuContainer, isVisible && styles.menuContainerActive].filter(Boolean).join(' ')}>
+      <div className={cx(styles.menuContainer, isVisible && styles.menuContainerActive)}>
         <div />
         <div>{children}</div>
         <div className={styles.menuFooterContainer}>{footer}</div>

@@ -1,6 +1,7 @@
 import { LinkProps } from "./Link";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { matchLink } from "@/lib/url";
+import cx from 'clsx';
 import * as styles from './linkmenu.css';
 
 export function LinkMenu({ to, label, subs, className, locale, urlLogical, exactMatch, ...rest }: LinkProps & { locale: string, urlLogical: string }) {
@@ -11,8 +12,8 @@ export function LinkMenu({ to, label, subs, className, locale, urlLogical, exact
     <div className={styles.menuItemContainer}>
       <a
         href={withLocale(to, locale)}
-        className={[styles.mainMenuItem, isActive && 'match', className].filter(Boolean).join(' ')}
-        {...rest}
+        className={cx(styles.mainMenuItem, isActive && 'match', className)}
+        {...rest as any}
       >
         {label}
       </a>
@@ -22,7 +23,7 @@ export function LinkMenu({ to, label, subs, className, locale, urlLogical, exact
             <a
               key={x.to}
               href={withLocale(x.to, locale)}
-              className={[styles.subMenuItem, matchLink(urlLogical, x.to, x.exactMatch) && 'match'].filter(Boolean).join(' ')}
+              className={cx(styles.subMenuItem, matchLink(urlLogical, x.to, x.exactMatch) && 'match')}
             >
               {x.label}
             </a>

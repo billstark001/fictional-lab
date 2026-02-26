@@ -1,4 +1,5 @@
 import { forwardRef, ButtonHTMLAttributes, HTMLAttributes } from "react";
+import cx from 'clsx';
 import * as styles from './components.css';
 
 // #region icon button
@@ -10,7 +11,7 @@ export const IconButton = forwardRef<
   const { className, ...rest } = props;
   return <button
     ref={ref}
-    className={['clickable-icon', styles.iconButton, className].filter(Boolean).join(' ')}
+    className={cx('clickable-icon', styles.iconButton, className)}
     {...rest}
   />;
 });
@@ -25,7 +26,7 @@ export const LinkButton = forwardRef<
 >(function LinkButton({ className, ...props }, ref) {
   return <button
     ref={ref}
-    className={[styles.linkButtonFrame, className].filter(Boolean).join(' ')}
+    className={cx(styles.linkButtonFrame, className)}
     {...props}
   />;
 });
@@ -37,7 +38,7 @@ export const ButtonGroup = forwardRef<
   HTMLAttributes<HTMLDivElement>
 >(function ButtonGroup({ className, ...props }, ref) {
   return <div
-    className={[styles.buttonGroupFrame, className].filter(Boolean).join(' ')}
+    className={cx(styles.buttonGroupFrame, className)}
     {...props}
     ref={ref}
   />;

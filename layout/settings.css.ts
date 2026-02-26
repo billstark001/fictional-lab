@@ -2,13 +2,13 @@ import { style } from '@vanilla-extract/css';
 
 export const hideOnDarkMode = style({
   selectors: {
-    "[data-theme='dark'] &": { display: 'none' },
+    "html[data-theme='dark'] &": { display: 'none' },
   },
 });
 
 export const hideOnLightMode = style({
   selectors: {
-    ":not([data-theme='dark']) &": { display: 'none' },
+    "html[data-theme]:not([data-theme='dark']) &": { display: 'none' },
   },
 });
 

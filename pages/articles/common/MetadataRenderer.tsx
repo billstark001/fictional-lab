@@ -1,5 +1,6 @@
 import { FaCalendar, FaUser } from 'react-icons/fa6';
 import { Metadata } from '@/lib/metadata/parseMetadata';
+import cx from 'clsx';
 import * as styles from '../articles.css';
 
 const langMap: Record<string, Record<string, string>> = {
@@ -26,10 +27,10 @@ export function MetadataRenderer(props: MetadataRendererProps) {
     || langMap[metadata.lang?.substring(0, 2) || '']
     || langMap.en;
 
-  const containerClass = [
+  const containerClass = cx(
     styles.metadataContainer,
     isCard && styles.metadataContainerCard,
-  ].filter(Boolean).join(' ');
+  );
 
   return (
     <div className={containerClass}>

@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { NewsRecord } from "./types";
 import { generateHtmlId } from "@/lib/html/generateHtmlId";
 import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
+import cx from 'clsx';
 import * as styles from './news.css';
 
 export const NewsCard = (props: NewsRecord) => {
@@ -16,7 +17,7 @@ export const NewsCard = (props: NewsRecord) => {
     .setLocale(locale)
     .toLocaleString({ weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
 
-  return <div className={[styles.newsCardContainer, !metadata.image && 'no-image'].filter(Boolean).join(' ')}>
+  return <div className={cx(styles.newsCardContainer, !metadata.image && 'no-image')}>
     <div className={`${styles.timelineCircle} dot`} />
 
     <div className="timeline">

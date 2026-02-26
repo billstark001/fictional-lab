@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  bibtex-js-parser@1.1.6:
-    hash: 0d136fb1db82a01d64312faf914a80c4113fe52d4f7e2f590e056fe7928ae7c6
-    path: patches/bibtex-js-parser@1.1.6.patch
-
 importers:
 
   .:
@@ -43,12 +38,12 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.3.1)(tsx@4.21.0))
-      bibtex-js-parser:
-        specifier: ^1.1.6
-        version: 1.1.6(patch_hash=0d136fb1db82a01d64312faf914a80c4113fe52d4f7e2f590e056fe7928ae7c6)
       cheerio:
         specifier: ^1.2.0
         version: 1.2.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       compression:
         specifier: ^1.8.1
         version: 1.8.1
@@ -1416,10 +1411,6 @@ packages:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
 
-  antlr4@4.13.2:
-    resolution: {integrity: sha512-QiVbZhyy4xAZ17UPEuG3YTOt8ZaoeOR1CvEAqrEsDBsOqINslaB147i9xqljZqoyf5S+EUlGStaj+t22LT9MOg==}
-    engines: {node: '>=16'}
-
   arg@4.1.3:
     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
 
@@ -1503,9 +1494,6 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  bibtex-js-parser@1.1.6:
-    resolution: {integrity: sha512-MIU5orNfUmUcBSr2jbxzjcK8QxoFRp2NsS5qrZO/5Hke7uEc/i8J2bUeLxLCJh7uuOmhl1EFQWHs8u+pukhxaQ==}
-
   body-parser@2.2.2:
     resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
     engines: {node: '>=18'}
@@ -1588,6 +1576,10 @@ packages:
   cheerio@1.2.0:
     resolution: {integrity: sha512-WDrybc/gKFpTYQutKIK6UvfcuxijIZfMfXaYm8NMsPQxSYvf+13fXUJ4rztGGbJcBQ/GF55gvrZ0Bc0bj/mqvg==}
     engines: {node: '>=20.18.1'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -4766,8 +4758,6 @@ snapshots:
     dependencies:
       color-convert: 2.0.1
 
-  antlr4@4.13.2: {}
-
   arg@4.1.3: {}
 
   argparse@2.0.1: {}
@@ -4870,10 +4860,6 @@ snapshots:
   balanced-match@4.0.4: {}
 
   baseline-browser-mapping@2.10.0: {}
-
-  bibtex-js-parser@1.1.6(patch_hash=0d136fb1db82a01d64312faf914a80c4113fe52d4f7e2f590e056fe7928ae7c6):
-    dependencies:
-      antlr4: 4.13.2
 
   body-parser@2.2.2:
     dependencies:
@@ -4978,6 +4964,8 @@ snapshots:
       parse5-parser-stream: 7.1.2
       undici: 7.22.0
       whatwg-mimetype: 4.0.0
+
+  clsx@2.1.1: {}
 
   color-convert@2.0.1:
     dependencies:

@@ -1,5 +1,6 @@
 import { IframeHTMLAttributes } from "react";
 import { useThemeQuery } from "./theme";
+import cx from 'clsx';
 import * as styles from './map.css';
 
 export type MapEmbedProps = {
@@ -40,7 +41,7 @@ const MapEmbed = (props: MapEmbedProps) => {
 
   return <iframe
     src={getMapUrl()}
-    className={[styles.mapFrame, className].filter(Boolean).join(' ')}
+    className={cx(styles.mapFrame, className)}
     allowFullScreen
     loading="lazy"
     title="Map Embed"

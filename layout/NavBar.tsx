@@ -7,6 +7,7 @@ import { IconButton } from '@/lib/components/Buttons';
 import Settings from './Settings';
 import Links from './Links';
 import useWithLocale from '@/lib/locale/useWithLocale';
+import cx from 'clsx';
 import * as styles from './navbar.css';
 
 export function Logo() {
@@ -35,10 +36,10 @@ export function NavBar() {
 
   const withLocale = useWithLocale();
 
-  const containerClass = [
+  const containerClass = cx(
     styles.navBarContainer,
     isTransparent && styles.navBarContainerTransparent,
-  ].filter(Boolean).join(' ');
+  );
 
   return (
     <div ref={containerRef} className={containerClass}>

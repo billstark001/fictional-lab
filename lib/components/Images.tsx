@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+import cx from 'clsx';
 import * as styles from './components.css';
 
 export const FullWidthImage = (props: {
@@ -9,7 +10,7 @@ export const FullWidthImage = (props: {
   return <>
     <img src={src} className={styles.fullWidthImage} />
     <div
-      className={[styles.imageCaption, className].filter(Boolean).join(' ')}
+      className={cx(styles.imageCaption, className)}
       {...rest}
     >
       {children}

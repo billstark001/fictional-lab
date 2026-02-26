@@ -10,7 +10,7 @@ declare module '*.md?img' {
 }
 
 declare module '*.bib' {
-  const content: (import("bibtex-js-parser").Entry & { errors?: string[] })[];
+  const content: (import("./lib/bibtex/types").BibtexEntry & { errors?: string[] })[];
   export default content;
 }
 

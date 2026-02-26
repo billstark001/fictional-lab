@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { Author, parseAuthor } from './author';
-import { Entry } from 'bibtex-js-parser';
+import { BibtexEntry } from '@/lib/bibtex/types';
 import { IoIosCopy } from "react-icons/io";
+import cx from 'clsx';
 import * as styles from './publications.css';
 
 interface PublicationProps {
-  entry: Entry & { errors?: string[] };
+  entry: BibtexEntry;
   index?: number | string;
 }
 
@@ -34,19 +35,19 @@ const AuthorList = (props: PublicationProps) => {
   return <div className={styles.authorListWrapper}>
     {authors.map((author, index) => author && <span
       key={index}
-      className={['author', doHighlightAuthor(author) && 'highlight'].filter(Boolean).join(' ')}
+      className={cx('author', doHighlightAuthor(author) && 'highlight')}
     >{formatAuthor(author)}</span>)}
   </div>;
 };
 
 const BasicInfo = (props: PublicationProps) => {
   const { entry } = props;
-  let journal = '';
-  if (entry.journal) {
-    journal = `${entry.journal}`;
-    if (entry.volume) journal += `, ${entry.volume}`;
-    if (entry.pages) journal += `: ${entry.pages}`;
-  }
+  // let journal = '';
+  // if (entry.journal) {
+  //   journal = `${entry.journal}`;
+  //   if (entry.volume) journal += `, ${entry.volume}`;
+  //   if (entry.pages) journal += `: ${entry.pages}`;
+  // }
   const venue = entry.journal || entry.booktitle || undefined;
   return <>
     {!!entry.year && <span>({entry.year})</span>}
@@ -76,10 +77,10 @@ export const Publication = ({ entry, index }: PublicationProps) => {
   );
 };
 
-export const PublicationList = ({ entries, headCharacter }: { entries: Entry[], headCharacter?: string }) => {
+export const PublicationList = ({ entries, headCharacter }: { entries: BibtexEntry[], headCharacter?: string }) => {
   return <div>
     {entries.map((pub, i) => <Publication
-      key={i} entry={pub as any}
+      key={i} entry={pub as BibtexEntry}
       index={headCharacter ? `${headCharacter}${i + 1}` : (i + 1)}
     />)}
   </div>;

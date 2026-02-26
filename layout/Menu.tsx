@@ -1,6 +1,7 @@
 import { useCallbackRef } from "@/lib/react/useCallbackRef";
 import { HTMLAttributes, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import cx from 'clsx';
 import * as styles from './menu.css';
 
 export type MenuWrapperProps = {
@@ -49,7 +50,7 @@ export const Menu = (props: HTMLAttributes<HTMLDivElement> & {
     <div className={styles.menuContainerFixed} style={{ left: positionX, top: positionY }}>
       <div
         ref={menuRef}
-        className={[styles.menuWrapper, variation, className].filter(Boolean).join(' ')}
+        className={cx(styles.menuWrapper, variation, className)}
         style={{ '--menu-h': `${h}px`, '--menu-v': `${v}px` } as React.CSSProperties}
         {...rest}
       />

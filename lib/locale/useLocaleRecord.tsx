@@ -26,7 +26,7 @@ export const useDynamicLocaleRecord = () => {
       }
     }
     // the 'href' parameter aligns to Vike
-    const r = extractLocale(pathname, pathname ?? '');
+    const r = extractLocale(pathname);
     setLocaleRecordOverride(r);
   }, []);
   return localeRecordOverride;

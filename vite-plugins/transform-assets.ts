@@ -1,6 +1,5 @@
+import { parseBibtex, BibtexEntry } from "../lib/bibtex";
 import { Plugin } from "vite";
-
-import { BibtexParser, Entry } from "bibtex-js-parser";
 
 export const transformAssets = () => {
   return {
@@ -19,11 +18,10 @@ export const transformAssets = () => {
           pieces.push(code.substring(startIndices[i], startIndices[i + 1]));
         }
         const parsed = pieces.map(c => {
-          let res: Entry | undefined = undefined;
+          let res: BibtexEntry | undefined = undefined;
           const errors: string[] = [];
-          BibtexParser.setErrorHandler((e) => errors.push(e));
           try {
-            res = BibtexParser.parseToJSON(c)?.[0];
+            res = parseBibtex(c)?.[0];
           } catch (e) {
             errors.push(String(e));
           }

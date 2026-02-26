@@ -4,6 +4,7 @@ import { useLocaleRecord } from "@/lib/locale/useLocaleRecord";
 import useWithLocale from "@/lib/locale/useWithLocale";
 import { HTMLAttributes } from "react";
 import { FaNewspaper, FaMicrochip } from "react-icons/fa6";
+import cx from 'clsx';
 import * as styles from './index.css';
 
 export const TopButtonGroup = (props: HTMLAttributes<HTMLDivElement>) => {
@@ -11,7 +12,7 @@ export const TopButtonGroup = (props: HTMLAttributes<HTMLDivElement>) => {
   const withLocale = useWithLocale();
   const { className, ...rest } = props;
 
-  return <ButtonGroup className={[styles.topButtonGroupButtons, className].filter(Boolean).join(' ')} {...rest}>
+  return <ButtonGroup className={cx(styles.topButtonGroupButtons, className)} {...rest}>
     {languageCode !== 'en' && <a href={withLocale('/', 'en')}><button>English Page</button></a>}
     {languageCode !== 'zh' && <a href={withLocale('/', 'zh')}><button>中文页面</button></a>}
     {languageCode !== 'ja' && <a href={withLocale('/', 'ja')}><button>日本語ページ</button></a>}
